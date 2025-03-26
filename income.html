@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <head>
     <meta charsset="utf-8">
-    <title>Design Print Send LLC - Finance / Assets</title>
+    <title>Design Print Send LLC - Finance / Income</title>
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/frozenheader.css">
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
@@ -12,7 +12,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
 	
-    <script src="js/finance/assets/assets.js"></script>
+    <script src="js/finance/revenue/revenue.js"></script>
+    <script src="js/finance/expenses/expenses.js"></script>
     <script src="js/nav.js"></script>
 </head>
 <body>
@@ -50,7 +51,7 @@
         <p>&nbsp;</p>
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link active" href="assets.html">Assets</a>
+                <a class="nav-link" href="assets.html">Assets</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="liabilities.html">Liabilities</a>
@@ -65,7 +66,7 @@
                 <a class="nav-link" href="equity.html">Equity</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="income.html">Income Statement</a>
+                <a class="nav-link active" href="income.html">Income Statement</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="balance.html">Balance Sheet</a>
@@ -82,10 +83,11 @@
 <div class="row">&nbsp;</div>
 <div class="row">
     <div class="col-lg-1">&nbsp;</div>
-    <div class="col-lg-10">
-        <h4 class="text-center">Assets</h4>
+    <div class="col-lg-7">
+        <h3 class="text-center">Income Statement (Profit and Loss)</h3>
         <div class="row">&nbsp;</div>
-        <table class="table table-striped assets">
+        <h4 class="text-center">Revenue</h4>
+        <table class="table table-striped revenue">
             <thead>
                 <tr>
                     <th class="info">Date</th>
@@ -94,7 +96,50 @@
                 </tr>
             </thead>
             <tbody></tbody>
+            <tfoot><tr><td colspan="2" class="text-center"></td><b>Total</b></td><td class="rev_total">$0.00</td></tr></tfoot>
         </table>
+        <div class="row">&nbsp;</div>
+        <h4 class="text-center">Expenses</h4>
+        <table class="table table-striped expenses">
+            <thead>
+                <tr>
+                    <th class="info">Date</th>
+                    <th class="info">Account</th>
+                    <th class="info">Amount</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+            <tfoot><tr><td colspan="2" class="text-center"></td><b>Total</b></td><td class="exp_total">$0.00</td></tr></tfoot>
+        </table>
+        <div class="row">&nbsp;</div>
+        <h4 class="text-center">Totals</h4>
+        <table class="table table-striped totals">
+            <thead>
+                <tr>
+                    <th class="info">Date</th>
+                    <th class="info">Account</th>
+                    <th class="info">Amount</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+            <tfoot><tr><td colspan="2" class="text-center"><b>Total</b></td><td class="grand_total">$0.00</td></tr></tfoot>
+        </table>
+    </div>
+    <div class="col-lg-2">
+        Reporting Period
+        <div class="input-group">
+            <div class="input-group-text" id="periodCal">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </div>
+            <input type="date" class="form-control periodSelect" placeholder="3/25/2025" aria-describedby="periodCal"/>
+        </div>
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="card graph">
+                <div class="card-body">Will be replaced with graphs
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </body>
