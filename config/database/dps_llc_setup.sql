@@ -48,7 +48,7 @@ create index ledger_entries_entry_type_idx on ledgerentries(trans);
 create index ledger_entries_account_id_idx on ledgerentries(account);
 create index accounts_account_type_idx on accounts(accounttype);
 	
-create or replace view v_assests as
+create or replace view v_assets as
 	select l.*, a.name from ledgerentries as l
 	join accounts as a on l.account = a.id
 	join accounttypes as at on a.accounttype = at.id
