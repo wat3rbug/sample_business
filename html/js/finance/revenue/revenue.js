@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
     $.ajax({
-        url: "repos/getAllRevenue.php",
+        url: "/repos/getAllRevenue.php",
         dataType: "json",
         success: function(results){
             $('.revenue tbody').empty();
