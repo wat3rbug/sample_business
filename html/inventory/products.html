@@ -13,11 +13,138 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
 	
     <script src="/js/nav.js"></script>
-    <script src="/js/pos/neworder/states.js"></script>
-    <script src="/js/pos/customer.js"></script>
-    <link rel="stylesheet" href="/css/orders/orders.css">
+    <script src="/js/inventory/products.js"></script>
+
 </head>
 <body>
+     <!-- Edit Product modal-->
+
+<div class="modal" id="editProdModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header d-block alert-warning">
+				<div class="row">
+					<div class="col-lg-2">&nbsp;</div>
+					<div class="col-lg-8">
+						<h5 class="modal-title text-center">Update Product</h5>
+					</div>
+					<div class="col-lg-2">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="modal-body">
+				
+				<div class="row">
+					<div class="col-sm-2">&nbsp;</div>
+                    <div class="col-lg-2 text-right">
+                        <label>Name</label>
+                    </div>
+					<div class="col-sm-6 text-left">
+                        <input type="hidden" id="editProdId" />
+						<input type="text" class="form-control" id="editProdName">
+					</div>
+				</div>
+				<div class="row">&nbsp;</div>
+				<div class="row">
+					<div class="col-sm-2 text-right">&nbsp;</div>
+                    <div class="col-lg-2 text-right"><label>URL</label></div>
+					<div class="col-sm-6 text-left">
+						<input type="text" class="form-control" id="editProdUrl" />
+					</div>
+				</div>
+				<div class="row">&nbsp;</div>
+				<div class="row">
+					<div class="col-sm-2">&nbsp;</div>
+					<div class="col-sm-4 text-right">Photo</div>
+					<div class="col-sm-4">
+						<div class="input-group">
+							<div class='input-group-addon'>
+								<span class="glyphicon glyphicon-picture"></span>
+							</div>
+							<input type="text" class="form-control" id="editProdPhoto">
+						</div>
+					</div>
+				</div>
+				<div class="row">&nbsp;</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-warning" onclick="updateProduct()">
+					<span class="glyphicon glyphicon-refresh"></span>&nbsp;Update Product
+				</button>&nbsp;
+				<button type="button" class="btn btn-outline-secondary" id="cancelEditProductBtn" data-dismiss="modal">
+					<span class="glyphicon glyphicon-ban-circle"></span>&nbsp;Cancel
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- add Product modal-->
+
+<div class="modal" id="addProdModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header d-block alert-success">
+				<div class="row">
+					<div class="col-lg-2">&nbsp;</div>
+					<div class="col-lg-8">
+						<h5 class="modal-title text-center">Add Product</h5>
+					</div>
+					<div class="col-lg-2">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="modal-body">
+				
+				<div class="row">
+					<div class="col-sm-2">&nbsp;</div>
+                    <div class="col-lg-2 text-right">
+                        <label>Name</label>
+                    </div>
+					<div class="col-sm-6 text-left">
+						<input type="text" class="form-control" id="addProdName">
+					</div>
+				</div>
+				<div class="row">&nbsp;</div>
+				<div class="row">
+					<div class="col-sm-2 text-right">&nbsp;</div>
+                    <div class="col-lg-2 text-right"><label>URL</label></div>
+					<div class="col-sm-6 text-left">
+						<input type="text" class="form-control" id="addProdUrl" />
+					</div>
+				</div>
+				<div class="row">&nbsp;</div>
+				<div class="row">
+					<div class="col-sm-2">&nbsp;</div>
+					<div class="col-sm-4 text-right">Photo</div>
+					<div class="col-sm-4">
+						<div class="input-group">
+							<div class='input-group-addon'>
+								<span class="glyphicon glyphicon-picture"></span>
+							</div>
+							<input type="text" class="form-control" id="addProdPhoto"/>
+						</div>
+					</div>
+				</div>
+            </div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" onclick="addProduct()">
+					<span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;Add Product
+				</button>&nbsp;
+				<button type="button" class="btn btn-outline-secondary" id="cancelAddProductBtn" data-dismiss="modal">
+					<span class="glyphicon glyphicon-ban-circle"></span>&nbsp;Cancel
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- normal page -->
+
 <div class="row">&nbsp;</div>
 <div class="row">
     <div class="col-sm-1">&nbsp;</div>
@@ -51,22 +178,50 @@
             </li>
         </ul>
     </div>
+    <div class="col-lg-1">&nbsp;</div>
 </div>
 <div class="row">&nbsp;</div>
 <div class="row">
     <div class="col-lg-1">&nbsp;</div>
     <div class="col-lg-10">
-    <ul class="nav nav-tabs">
-        <li class="nav-item">
-            <a class="nav-link active" href="http://dpsllc.com/inventory/products.html">Products</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="http://dpsllc.com/inventory/inventory.html">Inventory</a>
-        </li>
-    </ul>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" href="http://dpsllc.com/inventory/products.html">Products</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="http://dpsllc.com/inventory/inventory.html">Inventory</a>
+            </li>
+        </ul>
     </div>
+    <div class="col-lg-1">&nbsp;</div>
 </div>
 <div class="row">&nbsp;</div>
-
+<div class="row">
+    <div class="col-lg-9">&nbsp;</div>
+    <div class="col-lg-2 text-right">
+        <button type="button" class="btn btn-success addProdBtn"><span class="glyphicon glyphicon-plus"></span>&nbsp;Product</button>
+    </div>
+    <div class="col-lg-1">&nbsp;</div>
+</div>
+<div class="row">
+    <div class="col-lg-1">&nbsp;</div>
+    <div class="col-lg-10">
+        <h4 class="text-center">Products</h4>
+        <table class="table table-striped products">
+            <thead>
+                <tr>
+                    <th class="info">Action</th>
+                    <th class="info">Name</th>
+                    <th class="info">URL</th>
+                    <th class="info">Photo</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-lg-1">&nbsp;</div>
+</div>
+<div class="row">&nbsp;</div>
 </body>
 </html>
