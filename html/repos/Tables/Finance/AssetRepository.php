@@ -39,8 +39,18 @@ class AssetRepository {
         return $output;
     }
 
-    function updateAsset() {
-
+    function getAssetById($id) {
+        if (isset($id)) {
+            $sql = "SELECT * FROM v_assets WHERE id = ?";
+            $statement = $this->conn->prepare($sql);
+            $statement->bindParam(1, $id);
+            $statement->execute();
+            $output = array();
+            while ($row = $statement->fetch()) {
+                $output[] = $row;
+            }
+            return $output;
+        }
     }
 
     function deleteAsset() {

@@ -1,5 +1,5 @@
 <?php
-class RevenueRepository {
+class UpdateFinanceRepository {
 
     private $conn;
 
@@ -24,37 +24,29 @@ class RevenueRepository {
         }
     }
 
-    function createRevenue() {
+    function updateLedger($cust_dict) {
+        $id = $cust_dict['id'];
+        $name = $cust_dict['name'];
+        $amount = $cust_dict['amount'];
+        $transdate = $cust_dict['transdate'];
 
-    }
-
-    function getAllRevenue() {
-        $sql = "SELECT * FROM v_revenue";
-        $statement = $this->conn->prepare($sql);
-        $statement->execute();
-        $output = array();
-        while ($row = $statement->fetch()) {
-            $output[] = $row;
+        if (isset($id) && isset($transdate) && isset($name) && isset($amount)) {
+            $sql ="UPDATE ledgerentries as l JOIN transactions AS t ON t.id = l.trans JOIN accounts AS a ON a.id = l.account SET l.amount = ?, t.transdate = ?, a.name = ? WHERE l.id = ?";
+            $statement = $this->conn->prepare($sql);
+            $statement->bindParam(1, $amount);
+            $statement->bindParam(2, $transdate);
+            $statement->bindParam(3, $name);
+            $statement->bindParam(4, $id);
+            $statement->execute();
         }
-        return $output;
     }
 
-    function getRevenueById($id) {
+    function deleteLedgerEntry($id) {
         if (isset($id)) {
-            $sql = "SELECT * FROM v_revenue WHERE id = ?";
+            $sql = "DELETE FROM ledgerentries WHERE id = ?";
             $statement = $this->conn->prepare($sql);
             $statement->bindParam(1, $id);
             $statement->execute();
-            $output = array();
-            while ($row = $statement->fetch()) {
-                $output[] = $row;
-            }
-            return $output;
         }
     }
-
-    function deleteRevenue() {
-        
-    }
 }
-?>

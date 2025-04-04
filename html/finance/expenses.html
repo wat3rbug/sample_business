@@ -12,10 +12,87 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
 	
+    <script src="/js/finance/common_funcs.js"></script>
     <script src="/js/finance/expenses/expenses.js"></script>
     <script src="/js/nav.js"></script>
+    <script src="/js/dateFunctions.js"></script>
 </head>
 <body>
+    <!-- Edit Expense modal-->
+
+    <div class="modal" id="editExpenseModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header d-block alert-warning">
+                    <div class="row">
+                        <div class="col-lg-2">&nbsp;</div>
+                        <div class="col-lg-8">
+                            <h5 class="modal-title text-center">Update Expense</h5>
+                        </div>
+                        <div class="col-lg-2">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    
+                    <div class="row">
+                        <div class="col-sm-2">&nbsp;</div>
+                        <div class="col-lg-2 text-right">
+                            <label>Name</label>
+                        </div>
+                        <div class="col-sm-6 text-left">
+                            <input type="hidden" id="editExpId" />
+                            <input type="text" class="form-control" id="editExpName">
+                        </div>
+                    </div>
+                    <div class="row">&nbsp;</div>
+                    <div class="row">
+                        <div class="col-sm-2 text-right">&nbsp;</div>
+                        <div class="col-lg-2 text-right"><label>Date</label></div>
+                        <div class="col-sm-6 text-left">
+                            <div class="form-group">
+                                <div class="input-group date" id="editExpDate">
+                                    <div class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </div>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="row">&nbsp;</div>
+                    <div class="row">
+                        <div class="col-sm-2">&nbsp;</div>
+                        <div class="col-sm-4 text-right">Amount</div>
+                        <div class="col-sm-4 text-left">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">$</span>
+                                </div>
+                                <input type="number" class="form-control" id="editExpAmount" />
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="row">&nbsp;</div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-warning" onclick="updateExpense()">
+                        <span class="glyphicon glyphicon-refresh"></span>&nbsp;Update Expense
+                    </button>&nbsp;
+                    <button type="button" class="btn btn-outline-secondary" id="cancelEditExpenseBtn" data-dismiss="modal">
+                        <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- Normal page starts here -->
+
 <div class="row">&nbsp;</div>
 <div class="row">
     <div class="col-sm-1">&nbsp;</div>
@@ -32,49 +109,49 @@
     <div class="col-lg-10" role="navigation">
         <ul class="nav nav-pills">
             <li class="nav-item">
-                <a class="nav-link" href="index.html">Home</a>
+                <a class="nav-link" href="http://dpsllc.com/index.html">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" href="income.html">Finance</a>
+                <a class="nav-link active" href="http://dpsllc.com/finance/income.html">Finance</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/pos/neworder.html">Orders</a>
+                <a class="nav-link" href="http://dpsllc.com/pos/neworder.html">Orders</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="products.html">Inventory</a>
+                <a class="nav-link" href="http://dpsllc.com/products.html">Inventory</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="processing.html">Processing</a>
+                <a class="nav-link" href="http://dpsllc.com/processing.html">Processing</a>
             </li>
         </ul>
         <p>&nbsp;</p>
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link" href="assets.html">Assets</a>
+                <a class="nav-link" href="http://dpsllc.com/finance/assets.html">Assets</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="liabilities.html">Liabilities</a>
+                <a class="nav-link" href="http://dpsllc.com/finance/liabilities.html">Liabilities</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="revenue.html">Revenue</a>
+                <a class="nav-link" href="http://dpsllc.com/finance/revenue.html">Revenue</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" href="expenses.html">Expenses</a>
+                <a class="nav-link active" href="http://dpsllc.com/finance/expenses.html">Expenses</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="equity.html">Equity</a>
+                <a class="nav-link" href="http://dpsllc.com/finance/equity.html">Equity</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="income.html">Income Statement</a>
+                <a class="nav-link" href="http://dpsllc.com/finance/income.html">Income Statement</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="balance.html">Balance Sheet</a>
+                <a class="nav-link" href="http://dpsllc.com/finance/balance.html">Balance Sheet</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="cashflow.html">Cash Flow</a>
+                <a class="nav-link" href="http://dpsllc.com/finance/cashflow.html">Cash Flow</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link disabled" aria-disabled="true" href="taxes.html">Taxes</a>
+                <a class="nav-link disabled" aria-disabled="true" href="http://dpsllc.com/finance/taxes.html">Taxes</a>
             </li>
         </ul>
     </div>
@@ -88,6 +165,7 @@
         <table class="table table-striped expenses">
             <thead>
                 <tr>
+                    <th style="width: 65px">Action</th>
                     <th class="info">Date</th>
                     <th class="info">Account</th>
                     <th class="info">Amount</th>

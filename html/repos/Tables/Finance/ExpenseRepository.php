@@ -39,8 +39,18 @@ class ExpenseRepository {
         return $output;
     }
 
-    function updateExpense() {
-
+    function getExpenseById($id) {
+        if (isset($id)) {
+            $sql = "SELECT * FROM v_expenses WHERE id = ?";
+            $statement = $this->conn->prepare($sql);
+            $statement->bindParam(1, $id);
+            $statement->execute();
+            $output = array();
+            while ($row = $statement->fetch()) {
+                $output[] = $row;
+            }
+            return $output;
+        }
     }
 
     function deleteExpense() {

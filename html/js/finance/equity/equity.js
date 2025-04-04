@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
     $.ajax({
-        url: "repos/getAllEquity.php",
+        url: "/repos/getAllEquity.php",
         dataType: "json",
         success: function(results){
             $('.equity tbody').empty();
@@ -11,7 +11,14 @@ $(document).ready(function() {
                 line += 'No Data</td></tr>';
                 $('.equity tbody').append(line);
             } else {
-
+                for (i = 0; i < results.length; i ++) {
+                    var expense = results[i];
+                    var line = '<tr><td>' + getTransDate(expense) + '</td>';
+                    line += '<td>' + expense.name + '</td>';
+                    line += '<td>' + getAmount(expense) + '</td>';
+                    line += '</tr>';
+                    $('.equity tbody').append(line);
+                }
             }
         }
     })

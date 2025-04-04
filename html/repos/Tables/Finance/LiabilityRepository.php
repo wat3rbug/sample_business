@@ -39,8 +39,18 @@ class LiabilityRepository {
         return $output;
     }
 
-    function updateLiability() {
-
+    function getLiabilityById($id) {
+        if (isset($id)) {
+            $sql = "SELECT * FROM v_liabilities WHERE id = ?";
+            $statement = $this->conn->prepare($sql);
+            $statement->bindParam(1, $id);
+            $statement->execute();
+            $output = array();
+            while ($row = $statement->fetch()) {
+                $output[] = $row;
+            }
+            return $output;
+        }
     }
 
     function deleteLiability() {
