@@ -40,6 +40,19 @@ class UpdateFinanceRepository {
             $statement->execute();
         }
     }
+    function getLedgerEntryById($id) {
+        if (isset($id)) {
+            $sql = "SELECT l.*, t.transdate, a.name FROM ledgerentries AS l JOIN transactions AS t ON l.trans = t.id JOIN accounts AS a ON l.account = a.id JOIN accounttypes AS at ON a.accounttype = at.id WHERE l.id = ?";
+            $statement = $this->conn->prepare($sql);
+            $statement->bindParam(1, $id);
+            $statement->execute();
+            $output = array();
+            while ($row = $statement->fetch()) {
+                $output[] = $row;
+            }
+            return $output;
+        } 
+    }
 
     function deleteLedgerEntry($id) {
         if (isset($id)) {

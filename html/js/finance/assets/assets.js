@@ -58,7 +58,7 @@ function getDeleteBtn(asset) {
 
 function deleteAsset(id) {
     $.ajax({
-        url: "/repos/deleteAsset.php",
+        url: "/repos/deleteLedgerEntry.php",
         type: "post",
         data: {
             "id": id
@@ -78,7 +78,7 @@ function getEditBtn(asset) {
 
 function editAsset(id) {
     $.ajax({
-        url: "/repos/getAssetById.php",
+        url: "/repos/getLedgerEntryById.php",
         type: "post",
         data: {
             "id": id
@@ -101,7 +101,7 @@ function updateAsset() {
     var name = $('#editAssetName').val();
     var transdate = getTransDate($('#editAssetDate').datepicker('getDate'));;
     $.ajax({
-        url: "/repos/updateAsset.php",
+        url: "/repos/updateLedgerEntry.php",
         type: "post",
         data: {
             "id": id,

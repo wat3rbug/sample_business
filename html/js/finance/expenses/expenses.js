@@ -77,7 +77,7 @@ function getEditBtn(expense) {
 
 function editExpense(id) {
     $.ajax({
-        url: "/repos/getExpenseById.php",
+        url: "/repos/getLedgerEntryById.php",
         type: "post",
         data: {
             "id": id
@@ -100,7 +100,7 @@ function updateExpense() {
     var name = $('#editExpName').val();
     var transdate = getTransDate($('#editExpDate').datepicker('getDate'));;
     $.ajax({
-        url: "/repos/updateExpense.php",
+        url: "/repos/updateLedgerEntry.php",
         type: "post",
         data: {
             "id": id,

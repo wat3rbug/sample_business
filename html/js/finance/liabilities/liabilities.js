@@ -72,7 +72,7 @@ function getEditBtn(liability) {
 
 function editLiability(id) {
     $.ajax({
-        url: "/repos/getLiabilityById.php",
+        url: "/repos/getLedgerEntryById.php",
         type: "post",
         data: {
             "id": id
@@ -95,7 +95,7 @@ function updateLiability() {
     var name = $('#editLiaName').val();
     var transdate = getTransDate($('#editLiaDate').datepicker('getDate'));;
     $.ajax({
-        url: "/repos/updateLiability.php",
+        url: "/repos/updateLedgerEntry.php",
         type: "post",
         data: {
             "id": id,

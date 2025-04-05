@@ -77,7 +77,7 @@ function getEditBtn(revenue) {
 
 function editRevenue(id) {
     $.ajax({
-        url: "/repos/getRevenueById.php",
+        url: "/repos/getLedgerEntryById.php",
         type: "post",
         data: {
             "id": id
@@ -100,7 +100,7 @@ function updateRevenue() {
     var name = $('#editRevName').val();
     var transdate = getTransDate($('#editRevDate').datepicker('getDate'));;
     $.ajax({
-        url: "/repos/updateRevenue.php",
+        url: "/repos/updateLedgerEntry.php",
         type: "post",
         data: {
             "id": id,

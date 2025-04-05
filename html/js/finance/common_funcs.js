@@ -7,6 +7,8 @@ function getTransDate(expense) {
     return day + ' ' + months[month] + ' ' + year;
 }
 
+// will need to drop this after all pages are converted
+
 function getAmount(expense) {
     const formatter = new Intl.NumberFormat('en-us', {
         style: "currency",
@@ -15,3 +17,4 @@ function getAmount(expense) {
     });
     return formatter.format(expense.amount);
 }
+
