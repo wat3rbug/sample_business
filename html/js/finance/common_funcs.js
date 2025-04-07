@@ -1,3 +1,6 @@
+
+const CREDIT = 0;
+const DEBIT = 1;
 function getTransDate(expense) {
     var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     var trans = new Date(expense.transdate);
@@ -7,14 +10,16 @@ function getTransDate(expense) {
     return day + ' ' + months[month] + ' ' + year;
 }
 
-// will need to drop this after all pages are converted
-
-function getAmount(expense) {
-    const formatter = new Intl.NumberFormat('en-us', {
-        style: "currency",
-        currency: "USD",
-        trailingZeroDisplay: 'stripIfInteger' 
-    });
-    return formatter.format(expense.amount);
+function getCredit(equity, formatter) {
+    if (equity.entrytype == CREDIT) {
+        return formatter.format(equity.amount);
+    } else return ' --';
 }
+
+function getDebit(equity, formatter) {
+    if (equity.entrytype == DEBIT) {
+        return formatter.format(equity.amount);
+    } else return ' --';
+}
+
 

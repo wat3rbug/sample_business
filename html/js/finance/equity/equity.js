@@ -11,6 +11,9 @@ $(document).ready(function() {
         orientation: "top auto",
         todayHighlight: true
     });
+
+    const DEBIT = 0;
+    const CREDIT = 1;
 });
 
 function buildEquityTable() {
@@ -30,27 +33,40 @@ function buildEquityTable() {
                 let formatter = new Intl.NumberFormat('en-US', {
                     style: 'currency',
                     currency: 'USD',
-                    trailingZeroDisplay: 'stripIfInteger'   
+                    minimumFractionDigits: 2, 
+                    maximumFractionDigits: 2, 
+                    trailingZeroDisplay: 'auto' 
                   });
                 for (i = 0; i < results.length; i ++) {
                     var equity = results[i];
-                    var line = '<tr><td style="width:65px">';
-                    line += getActionBtns(equity) + '</td>';
-                    line += '<td>' + getWebDateFromDBString(equity.transdate) + '</td>';
-                    line += '<td>' + equity.name + '</td>';
-                    line += '<td>' + getCredit(equity, formatter) + '</td>';
-                    line += '<td>' + getDebit(equity, formatter) + '</td>';
-                    line += '</tr>';
+                    var line = buildTableRow(equity, formatter);
                     $('.equity tbody').append(line);
-                    if (equity.entrytype == 1) credit += equity.amount;;
-                    if (equity.entrytype == 0) debit += equity.amount;
+                    if (equity.entrytype == DEBIT) debit += equity.amount;;
+                    if (equity.entrytype == CREDIT) credit += equity.amount;
                 }
-                $('#creditTotal').text(formatter.format(credit));
-                $('#debitTotal').text(formatter.format(debit));
-                $('#grandTotal').text(formatter.format((credit - debit)));
+                buildTableTotals(credit, debit, formatter);
             }
         }
     });
+}
+
+function buildTableTotals(credit, debit, formatter) {
+    $('#creditTotal').text(formatter.format(credit));
+    $('#debitTotal').text(formatter.format(debit));
+    // magic flip portion
+    var total = parseFloat(debit) - parseFloat(credit);
+    $('#grandTotal').text(formatter.format(total));
+}
+
+function buildTableRow(equity, formatter) {
+    var line = '<tr><td style="width:65px">';
+    line += getActionBtns(equity) + '</td>';
+    line += '<td>' + getWebDateFromDBString(equity.transdate) + '</td>';
+    line += '<td>' + equity.name + '</td>';
+    line += '<td>' + getDebit(equity, formatter) + '</td>';
+    line += '<td>' + getCredit(equity, formatter) + '</td>';
+    line += '</tr>';
+    return line;
 }
 
 function getActionBtns(equity) {
@@ -97,7 +113,8 @@ function editEquity(id) {
             $('#editEquityModal').modal('toggle');
             var equity = results[0];
             $('#editEquityId').val(equity.id);
-            $('#editEquityDate').val(getDateFromDBString(equity.transdate));
+            $('#editEquityEntryType').val(equity.entrytype);
+            $('#editEquityDate').datepicker('setDate', new Date(equity.transdate));
             $('#editEquityName').val(equity.name);
             $('#editEquityAmount').val(equity.amount);
         }
@@ -109,7 +126,8 @@ function updateEquity() {
     var id = $('#editEquityId').val();
     var amount = $('#editEquityAmount').val();
     var name = $('#editEquityName').val();
-    var transdate = getTransDate($('#editEquityDate').datepicker('getDate'));;
+    var entrytype = $('#editEquityEntryType').val();
+    var transdate = getDBDateFromJSDate($('#editEquityDate').datepicker('getDate'));
     $.ajax({
         url: "/repos/updateLedgerEntry.php",
         type: "post",
@@ -117,7 +135,8 @@ function updateEquity() {
             "id": id,
             "amount": amount,
             "transdate" : transdate,
-            "name": name
+            "name": name,
+            "entrytype": entrytype
         }, success: function(results) {
             clearEquityModals();
             buildEquityTable();
@@ -132,16 +151,13 @@ function clearEquityModals() {
     $('#editEquityDate').val('');
 }
 
-function getDebit(equity, formatter) {
-    if (equity.entrytype == 0) {
-        return formatter.format(equity.amount);
-    } else return ' --';
-}
-
-function getCredit(equity, formatter) {
-    if (equity.entrytype == 1) {
-        return formatter.format(equity.amount);
-    } else return ' --';
+function makeDatepickerFromDB(transdate) {
+    var trans = new Date(transdate);
+    var year = trans.getUTCFullYear();
+    var month = trans.getUTCMonth();
+    var day = trans.getUTCDay();
+    var result = year + '-' + month + '-' + day;
+    return result;
 }
 
 

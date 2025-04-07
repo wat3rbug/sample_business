@@ -28,6 +28,21 @@ class ExpenseRepository {
 
     }
 
+    function getExpenseByMonth($month) {
+        if (isset($month)) {
+            $sql = "SELECT * FROM v_expenses WHERE MONTH(?) AND YEAR(?) ORDER BY transdate";
+            $statement = $this->conn->prepare($sql);
+            $statement->bindParam(1, $month);
+            $statement->bindParam(2, $month);
+            $statement->execute();
+            $output = array();
+        while ($row = $statement->fetch()) {
+            $output[] = $row;
+        }
+        return $output;
+        }
+    }
+
     function getAllExpenses() {
         $sql = "SELECT * FROM v_expenses";
         $statement = $this->conn->prepare($sql);

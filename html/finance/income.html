@@ -12,9 +12,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
 	
-    <script src="/js/finance/revenue/revenue.js"></script>
-    <script src="/js/finance/expenses/expenses.js"></script>
+    <script src="/js/finance/income.js"></script>
+    <!-- <script src="/js/finance/revenue/revenue.js"></script>
+    <script src="/js/finance/expenses/expenses.js"></script> -->
     <script src="/js/nav.js"></script>
+    <script src="/js/dateFunctions.js"></script>
 </head>
 <body>
 <div class="row">&nbsp;</div>
@@ -33,49 +35,52 @@
     <div class="col-lg-10" role="navigation">
         <ul class="nav nav-pills">
             <li class="nav-item">
-                <a class="nav-link" href="index.html">Home</a>
+                <a class="nav-link" href="http://dpsllc.com/index.html">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" href="income.html">Finance</a>
+                <a class="nav-link active" href="http://dpsllc.com/finance/income.html">Finance</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="http://dpsllc.com/pos/neworder.html">Orders</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="products.html">Inventory</a>
+                <a class="nav-link" href="http://dpsllc.com/products.html">Inventory</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="processing.html">Processing</a>
+                <a class="nav-link" href="http://dpsllc.com/processing.html">Processing</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="http://dpsllc.com/procurement/acctmanagement.html">Procurement</a>
             </li>
         </ul>
         <p>&nbsp;</p>
         <ul class="nav nav-tabs">
             <li class="nav-item">
-                <a class="nav-link" href="assets.html">Assets</a>
+                <a class="nav-link" href="http://dpsllc.com/finance/assets.html">Assets</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="liabilities.html">Liabilities</a>
+                <a class="nav-link" href="http://dpsllc.com/finance/liabilities.html">Liabilities</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="revenue.html">Revenue</a>
+                <a class="nav-link" href="http://dpsllc.com/finance/revenue.html">Revenue</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="expenses.html">Expenses</a>
+                <a class="nav-link" href="http://dpsllc.com/finance/expenses.html">Expenses</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="equity.html">Equity</a>
+                <a class="nav-link" href="http://dpsllc.com/finance/equity.html">Equity</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link active" href="income.html">Income Statement</a>
+                <a class="nav-link active" href="http://dpsllc.com/finance/income.html">Income Statement</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="balance.html">Balance Sheet</a>
+                <a class="nav-link" href="http://dpsllc.com/finance/balance.html">Balance Sheet</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="cashflow.html">Cash Flow</a>
+                <a class="nav-link" href="chttp://dpsllc.com/finance/ashflow.html">Cash Flow</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link disabled" aria-disabled="true" href="taxes.html">Taxes</a>
+                <a class="nav-link disabled" aria-disabled="true" href="http://dpsllc.com/finance/taxes.html">Taxes</a>
             </li>
         </ul>
     </div>
@@ -86,31 +91,57 @@
     <div class="col-lg-7">
         <h3 class="text-center">Income Statement (Profit and Loss)</h3>
         <div class="row">&nbsp;</div>
-        <h4 class="text-center">Revenue</h4>
-        <table class="table table-striped revenue">
-            <thead>
-                <tr>
-                    <th class="info">Date</th>
-                    <th class="info">Account</th>
-                    <th class="info">Amount</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-            <tfoot><tr><td colspan="2" class="text-center"></td><b>Total</b></td><td class="rev_total">$0.00</td></tr></tfoot>
-        </table>
+        <div class="card">
+            <div class="card-header">
+                <h4 class="text-center">Revenue</h4>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped revenue">
+                    <thead>
+                        <tr>
+                            <th class="info">Date</th>
+                            <th class="info">Account</th>
+                            <th class="info">Debit</th>
+                            <th class="info">Credit</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="2" class="text-left"><b>Total</b></td>
+                            <td class="rev_total">$0.00</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
         <div class="row">&nbsp;</div>
-        <h4 class="text-center">Expenses</h4>
-        <table class="table table-striped expenses">
-            <thead>
-                <tr>
-                    <th class="info">Date</th>
-                    <th class="info">Account</th>
-                    <th class="info">Amount</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-            <tfoot><tr><td colspan="2" class="text-center"></td><b>Total</b></td><td class="exp_total">$0.00</td></tr></tfoot>
-        </table>
+        <div class="row">Cost Of Goods Sold</div>
+        <div class="row">&nbsp;</div>
+        <div class="row">Gross Profit</div>
+        <div class="row">&nbsp;</div>
+        <div class="card">
+            <div class="card-header">
+                <h4 class="text-center">Operating Expenses</h4>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped expenses">
+                    <thead>
+                        <tr>
+                            <th class="info">Date</th>
+                            <th class="info">Account</th>
+                            <th class="info">Debit</th>
+                            <th class="info">Credit</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                    <tfoot><tr><td colspan="2" class="text-center"></td><b>Total</b></td><td class="exp_total">$0.00</td></tr></tfoot>
+                </table>
+            </div>
+        </div>
+
+        
         <div class="row">&nbsp;</div>
         <h4 class="text-center">Totals</h4>
         <table class="table table-striped totals">

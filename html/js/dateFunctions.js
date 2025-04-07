@@ -10,7 +10,7 @@ function getDBDateFromJSDate(currentDate) {
 	if (currentDate == null) return "N/A";
 	var year = currentDate.getFullYear();
 	var month = currentDate.getMonth() + 1;
-	var day = currentDate.getDate() - 1;
+	var day = currentDate.getDate();
 	return year + "-" + month + "-" + day;
 }
 

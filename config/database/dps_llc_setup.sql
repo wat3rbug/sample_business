@@ -39,6 +39,7 @@ create table ledgerentries (
 	account int not null,
 	entrytype int not null default 0,
 	amount decimal(5, 2) not null,
+	name varchar(40) not null,
 	foreign key ledger_entry_transaction_fk(trans) references transactions(id),
 	foreign key ledger_entries_account_fk(account) references accounts(id)
 ) engine = InnoDB;
@@ -49,35 +50,35 @@ create index ledger_entries_account_id_idx on ledgerentries(account);
 create index accounts_account_type_idx on accounts(accounttype);
 	
 create or replace view v_assets as
-	select l.*, t.transdate, a.name from ledgerentries as l
+	select l.*, t.transdate from ledgerentries as l
 	join transactions as t on l.trans = t.id
 	join accounts as a on l.account = a.id
 	join accounttypes as at on a.accounttype = at.id
 	where at.name = 'Assets' order by t.transdate desc;
 	
 create or replace view v_equity as
-	select l.*, t.transdate, a.name from ledgerentries as l
+	select l.*, t.transdate from ledgerentries as l
 	join transactions as t on l.trans = t.id
 	join accounts as a on l.account = a.id
 	join accounttypes as at on a.accounttype = at.id
 	where at.name = 'Owners Equity' order by t.transdate desc;
 	
 create or replace view v_liabilities as
-	select l.*, t.transdate, a.name from ledgerentries as l
+	select l.*, t.transdate from ledgerentries as l
 	join transactions as t on l.trans = t.id
 	join accounts as a on l.account = a.id
 	join accounttypes as at on a.accounttype = at.id
 	where at.name = 'Liabilities' order by t.transdate desc;
 	
 create or replace view v_revenue as
-	select l.*, t.transdate, a.name from ledgerentries as l
+	select l.*, t.transdate from ledgerentries as l
 	join transactions as t on l.trans = t.id
 	join accounts as a on l.account = a.id
 	join accounttypes as at on a.accounttype = at.id
 	where at.name = 'Revenue' order by t.transdate desc;
 	
 create or replace view v_expenses as
-	select l.*,t.transdate, a.name from ledgerentries as l
+	select l.*,t.transdate from ledgerentries as l
 	join transactions as t on l.trans = t.id
 	join accounts as a on l.account = a.id
 	join accounttypes as at on a.accounttype = at.id

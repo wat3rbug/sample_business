@@ -28,6 +28,21 @@ class RevenueRepository {
 
     }
 
+    function getRevenueByMonth($month) {
+        if (isset($month)) {
+            $sql = "SELECT * FROM v_revenue WHERE MONTH(?) AND YEAR(?) ORDER BY transdate";
+            $statement = $this->conn->prepare($sql);
+            $statement->bindParam(1, $month);
+            $statement->bindParam(2, $month);
+            $statement->execute();
+            $output = array();
+        while ($row = $statement->fetch()) {
+            $output[] = $row;
+        }
+        return $output;
+        }
+    }
+
     function getAllRevenue() {
         $sql = "SELECT * FROM v_revenue";
         $statement = $this->conn->prepare($sql);

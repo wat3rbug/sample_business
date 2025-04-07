@@ -12,7 +12,8 @@ $(document).ready(function() {
         todayHighlight: true
     });
 
-    
+    const DEBIT = 1;
+    const CREDIT = 0;
 });
 
 function buildRevenueTable() {
@@ -27,16 +28,33 @@ function buildRevenueTable() {
                 line += 'No Data</td></tr>';
                 $('.revenue tbody').append(line);
             } else {
+                var credit = 0;
+                var debit = 0;
+                let formatter = new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                    minimumFractionDigits: 2, 
+                    maximumFractionDigits: 2, 
+                    trailingZeroDisplay: 'auto' 
+                  });
                 for (i = 0; i < results.length; i ++) {
                     var revenue = results[i];
                     var line = '<tr><td style="width:65px">';
                     line += getActionBtns(revenue) + '</td>';
                     line += '<td>' + getWebDateFromDBString(revenue.transdate) + '</td>';
                     line += '<td>' + revenue.name + '</td>';
-                    line += '<td>' + getAmount(revenue) + '</td>';
+                    line += '<td>' + getDebit(revenue, formatter) + '</td>';
+                    line += '<td>' + getCredit(revenue, formatter) + '</td>';
                     line += '</tr>';
                     $('.revenue tbody').append(line);
+                    if (revenue.entrytype == CREDIT) credit += revenue.amount;;
+                    if (revenue.entrytype == DEBIT) debit += revenue.amount;
                 }
+                $('#creditTotal').text(formatter.format(credit));
+                $('#debitTotal').text(formatter.format(debit));
+                // magic flip portion
+                var total = parseFloat(debit) - parseFloat(credit);
+                $('#grandTotal').text(formatter.format(total));
             }
         }
     });
@@ -86,7 +104,8 @@ function editRevenue(id) {
             $('#editRevenueModal').modal('toggle');
             var revenue = results[0];
             $('#editRevId').val(revenue.id);
-            $('#editRevDate').val(getDateFromDBString(revenue.transdate));
+            $('#editRevEntryType').val(revenue.entrytype);
+            $('#editRevDate').datepicker('setDate', new Date(revenue.transdate));
             $('#editRevName').val(revenue.name);
             $('#editRevAmount').val(revenue.amount);
         }
@@ -98,7 +117,8 @@ function updateRevenue() {
     var id = $('#editRevId').val();
     var amount = $('#editRevAmount').val();
     var name = $('#editRevName').val();
-    var transdate = getTransDate($('#editRevDate').datepicker('getDate'));;
+    var entrytype = $('#editRevEntryType').val();
+    var transdate = getDBDateFromJSDate($('#editRevDate').datepicker('getDate'));;
     $.ajax({
         url: "/repos/updateLedgerEntry.php",
         type: "post",
@@ -106,7 +126,8 @@ function updateRevenue() {
             "id": id,
             "amount": amount,
             "transdate" : transdate,
-            "name": name
+            "name": name,
+            "entrytype": entrytype
         }, success: function(results) {
             clearRevenueModals();
             buildRevenueTable();

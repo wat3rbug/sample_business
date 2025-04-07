@@ -29,20 +29,22 @@ class UpdateFinanceRepository {
         $name = $cust_dict['name'];
         $amount = $cust_dict['amount'];
         $transdate = $cust_dict['transdate'];
+        $entrytype = $cust_dict['entrytype'];
 
-        if (isset($id) && isset($transdate) && isset($name) && isset($amount)) {
-            $sql ="UPDATE ledgerentries as l JOIN transactions AS t ON t.id = l.trans JOIN accounts AS a ON a.id = l.account SET l.amount = ?, t.transdate = ?, a.name = ? WHERE l.id = ?";
+        if (isset($id) && isset($transdate) && isset($name) && isset($amount) && isset($entrytype)) {
+            $sql ="UPDATE ledgerentries as l JOIN transactions AS t ON t.id = l.trans JOIN accounts AS a ON a.id = l.account SET l.amount = ?, t.transdate = ?, l.name = ?, l.entrytype = ? WHERE l.id = ?";
             $statement = $this->conn->prepare($sql);
             $statement->bindParam(1, $amount);
             $statement->bindParam(2, $transdate);
             $statement->bindParam(3, $name);
-            $statement->bindParam(4, $id);
+            $statement->bindParam(4, $entrytype);
+            $statement->bindParam(5, $id);
             $statement->execute();
         }
     }
     function getLedgerEntryById($id) {
         if (isset($id)) {
-            $sql = "SELECT l.*, t.transdate, a.name FROM ledgerentries AS l JOIN transactions AS t ON l.trans = t.id JOIN accounts AS a ON l.account = a.id JOIN accounttypes AS at ON a.accounttype = at.id WHERE l.id = ?";
+            $sql = "SELECT l.*, t.transdate FROM ledgerentries AS l JOIN transactions AS t ON l.trans = t.id JOIN accounts AS a ON l.account = a.id JOIN accounttypes AS at ON a.accounttype = at.id WHERE l.id = ?";
             $statement = $this->conn->prepare($sql);
             $statement->bindParam(1, $id);
             $statement->execute();

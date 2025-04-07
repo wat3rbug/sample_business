@@ -67,6 +67,19 @@
                     <div class="row">&nbsp;</div>
                     <div class="row">
                         <div class="col-sm-2">&nbsp;</div>
+                        <div class="col-lg-2 text-right">
+                            <label>Entry Type</label>
+                        </div>
+                        <div class="col-sm-6 text-left">
+                            <select class="form-control" id="editRevEntryType">
+                                <option value="1">Debit</option>
+                                <option value="0">Credit</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">&nbsp;</div>
+                    <div class="row">
+                        <div class="col-sm-2">&nbsp;</div>
                         <div class="col-sm-4 text-right">Amount</div>
                         <div class="col-sm-4 text-left">
                             <div class="input-group">
@@ -123,6 +136,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="http://dpsllc.com/processing.html">Processing</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="http://dpsllc.com/procurement/acctmanagement.html">Procurement</a>
+            </li>
         </ul>
         <p>&nbsp;</p>
         <ul class="nav nav-tabs">
@@ -136,7 +152,7 @@
                 <a class="nav-link active" href="http://dpsllc.com/finance/revenue.html">Revenue</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="http://dpsllc.com/finance/expenses.html">Revenues</a>
+                <a class="nav-link" href="http://dpsllc.com/finance/expenses.html">Expenses</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="http://dpsllc.com/finance/equity.html">Equity</a>
@@ -168,10 +184,22 @@
                     <th style="width: 65px">Action</th>
                     <th class="info">Date</th>
                     <th class="info">Account</th>
-                    <th class="info">Amount</th>
+                    <th class="info">Debit</th>
+                    <th class="info">Credit</th>
                 </tr>
             </thead>
             <tbody></tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="3" class="text-left">Subtotals</td>
+                    <td id="debitTotal"></td>
+                    <td id="creditTotal"></td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="text-left">Grand Total</td>
+                    <td colspan="2" class="text-left" id="grandTotal"></td>
+                </tr>
+            </tfoot>
         </table>
     </div>
 </div>
