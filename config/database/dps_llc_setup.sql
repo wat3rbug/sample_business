@@ -4,6 +4,7 @@ drop table if exists `ledgerentries`;
 drop table if exists `accounts`;
 drop table if exists `accounttypes`;
 drop table if exists `transactions`;
+drop table if exists `tags`;
 drop table if exists `polineitems`;
 drop table if exists `partorders`;
 drop table if exists `vendors`;
@@ -153,6 +154,13 @@ create table vendors (
 	quantity int not null default(1),
 	cost_per_unity decimal not null
  ) engine = Innodb;
+
+ create table tags (
+	id int auto_increment primary key,
+	description varchar(20) not null,
+	vendor int not null,
+	foreign key fk_vendor_tag(vendor) references vendors(id)
+ ) engine = InnoDB;
 
 create index transactions_transaction_date_idx on transactions(id);
 create index ledger_entries_entry_type_idx on ledgerentries(trans);
