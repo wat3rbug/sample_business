@@ -129,6 +129,49 @@
     </div>
 </div>
 
+<!-- PO Vendor modal -->
+
+<div class="modal" id="addPOVendModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header d-block alert-warning">
+                <div class="row">
+                    <div class="col-lg-2">&nbsp;</div>
+                    <div class="col-lg-8">
+                        <h5 class="modal-title text-center">Add Purchase Order - Vendor</h5>
+                    </div>
+                    <div class="col-lg-2">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                
+                <div class="row">
+                    <div class="col-sm-2">&nbsp;</div>
+                    <div class="col-lg-2 text-right">
+                        <label>Vendor</label>
+                    </div>
+                    <div class="col-sm-6 text-left">
+                        <select class="form-control" id="addPOVendName">
+                    </div>
+                </div>            
+                <div class="row">&nbsp;</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success">
+                    <span class="glyphicon glyphicon-fastforward"></span>&nbsp;Next
+                </button>&nbsp;
+                <button type="button" class="btn btn-outline-secondary" id="cancelAddPOBtn" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- normal page starts here -->
 
 <div class="row">&nbsp;</div>
@@ -172,13 +215,10 @@
                 <a class="nav-link active" href="http://dpsllc.com/procurement/acctmanagement.html">Account Management</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="http://dpsllc.com/procurement/orders.html">Orders</a>
+                <a class="nav-link" href="http://dpsllc.com/procurement/purchasing.html">Purchasing</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="http://dpsllc.com/procurement/history.html">Order History</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="http://dpsllc.com/procurement/vendors.html">Vendors</a>
+                <a class="nav-link" href="http://dpsllc.com/procurement/history.html">Purchase History</a>
             </li>
         </ul>
     </div>
@@ -186,13 +226,7 @@
 <div class="row">&nbsp;</div>
 <div class="row">
     <div class="col-lg-1">&nbsp;</div>
-    <div class="col-lg-10 text-center">Account Management</div>
-</div>
-<div class="row">
-    <div class="col-lg-1">&nbsp;</div>
-    <div class="col-lg-10"><button class="btn btn-success addAccount">
-        <span class="glyphicon glyphicon-plus"></span>Account</button>
-    </div>
+    <div class="col-lg-10 text-center">Purchase History</div>
 </div>
 <div class="row">&nbsp;</div>
 <div class="row">

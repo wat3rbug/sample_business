@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<head>
+    <meta charsset="utf-8">
+    <title>Design Print Send LLC - Procurement / Account Management</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/frozenheader.css">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"/>
+
+    <script src="/jquery-3.3.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+	
+    <script src="/js/procurement/acctmanagement.js"></script>
+    <script src="/js/procurement/purchasing.js"></script>
+    <script src="/js/procurement/purchaseordering.js"></script>
+    <!-- <script src="/js/finance/expenses/expenses.js"></script> -->
+    <script src="/js/nav.js"></script>
+    <script src="/js/dateFunctions.js"></script>
+</head>
+<body>
+    <!-- Add Tag Modal -->
+
+<div class="modal" id="addTagModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header d-block alert-success">
+                <div class="row">
+                    <div class="col-lg-2">&nbsp;</div>
+                    <div class="col-lg-8">
+                        <h5 class="modal-title text-center">Add Vendor Tag</h5>
+                    </div>
+                    <div class="col-lg-2">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">  
+                <div class="row">
+                    <div class="col-sm-2">&nbsp;</div>
+                    <div class="col-lg-2 text-right">
+                        <label>Vendor</label>
+                    </div>
+                    <div class="col-sm-6 text-left">
+                        <input type="hidden" id="addTagIdHdn"/>
+                        <label id="addTagVendor"></label>
+                    </div>
+                </div>
+                <div class="row">&nbsp;</div>
+                <div class="row">
+                    <div class="col-sm-2">&nbsp;</div>
+                    <div class="col-lg-2 text-right">
+                        <label>Description</label>
+                    </div>
+                    <div class="col-sm-6 text-left">
+                        <input class="form-control" id="addTagDesc">
+                    </div>
+                </div>              
+                <div class="row">&nbsp;</div>
+                <div class="row">
+                    <div class="col-sm-2">&nbsp;</div>
+                    <div class="col-sm-8 text-center" id="addTagModalTags"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="addTag()">
+                    <span class="glyphicon glyphicon-plus"></span>&nbsp;Add Tag
+                </button>&nbsp;
+                <button type="button" class="btn btn-outline-secondary" id="cancelAddTagBtn" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>    
+    <!-- Add Vendor modal-->
+
+<div class="modal" id="addVendModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header d-block alert-success">
+                <div class="row">
+                    <div class="col-lg-2">&nbsp;</div>
+                    <div class="col-lg-8">
+                        <h5 class="modal-title text-center">Add Vendor</h5>
+                    </div>
+                    <div class="col-lg-2">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                
+                <div class="row">
+                    <div class="col-sm-2">&nbsp;</div>
+                    <div class="col-lg-2 text-right">
+                        <label>Name</label>
+                    </div>
+                    <div class="col-sm-6 text-left">
+                        <input type="text" class="form-control" id="addVendName">
+                    </div>
+                </div>
+                <div class="row">&nbsp;</div>
+                <div class="row">
+                    <div class="col-sm-2">&nbsp;</div>
+                    <div class="col-lg-2 text-right">
+                        <label>URL</label>
+                    </div>
+                    <div class="col-sm-6 text-left">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="webaddon">http://</span>
+                            </div>
+                            <input type="text" class="form-control" id="addVendUrl" aria-describedby="webaddon">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">&nbsp;</div>
+                <div class="row">
+                    <div class="col-sm-2">&nbsp;</div>
+                    <div class="col-lg-2 text-right">
+                        <label>Address</label>
+                    </div>
+                    <div class="col-sm-6 text-left">
+                        <input class="form-control" id="addVendAddress1">
+                    </div>
+                </div>     
+                <div class="row">&nbsp;</div>
+                <div class="row">
+                    <div class="col-sm-2">&nbsp;</div>
+                    <div class="col-lg-2 text-right">
+                        <label>Address 2</label>
+                    </div>
+                    <div class="col-sm-6 text-left">
+                        <input class="form-control" id="addVendAddress2">
+                    </div>
+                </div> 
+                <div class="row">&nbsp;</div>
+                <div class="row">
+                    <div class="col-sm-2">&nbsp;</div>
+                    <div class="col-lg-2 text-right">
+                        <label>City</label>
+                    </div>
+                    <div class="col-sm-6 text-left">
+                        <input class ="form-control" id="addVendCity">
+                    </div>
+                </div> 
+                <div class="row">&nbsp;</div>
+                <div class="row">
+                    <div class="col-sm-2">&nbsp;</div>
+                    <div class="col-lg-2 text-right">
+                        <label>State</label>
+                    </div>
+                    <div class="col-sm-6 text-left">
+                        <select class="form-control" id="addVendState"></select>
+                    </div>
+                </div> 
+                <div class="row">&nbsp;</div>
+                <div class="row">
+                    <div class="col-sm-2">&nbsp;</div>
+                    <div class="col-lg-2 text-right">
+                        <label>Zipcode</label>
+                    </div>
+                    <div class="col-sm-6 text-left">
+                        <input type="text" id="addVendZip" class="form-control">
+                    </div>
+                </div>          
+                <div class="row">&nbsp;</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="addVendor()">
+                    <span class="glyphicon glyphicon-plus"></span>&nbsp;Add Vendor
+                </button>&nbsp;
+                <button type="button" class="btn btn-outline-secondary" id="cancelAddAccountBtn" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Vendor modal-->
+
+<div class="modal" id="editVendModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header d-block alert-warning">
+                <div class="row">
+                    <div class="col-lg-2">&nbsp;</div>
+                    <div class="col-lg-8">
+                        <h5 class="modal-title text-center">Edit Vendor</h5>
+                    </div>
+                    <div class="col-lg-2">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                
+                <div class="row">
+                    <div class="col-sm-2">&nbsp;</div>
+                    <div class="col-lg-2 text-right">
+                        <label>Name</label>
+                    </div>
+                    <div class="col-sm-6 text-left">
+                        <input type="hidden" id="editVendId">
+                        <input type="text" class="form-control" id="editVendName">
+                    </div>
+                </div>
+                <div class="row">&nbsp;</div>
+                <div class="row">
+                    <div class="col-sm-2">&nbsp;</div>
+                    <div class="col-lg-2 text-right">
+                        <label>URL</label>
+                    </div>
+                    <div class="col-sm-6 text-left">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="webaddon">http://</span>
+                            </div>
+                            <input type="text" class="form-control" id="editVendUrl" aria-describedby="webaddon">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">&nbsp;</div>
+                <div class="row">
+                    <div class="col-sm-2">&nbsp;</div>
+                    <div class="col-lg-2 text-right">
+                        <label>Address</label>
+                    </div>
+                    <div class="col-sm-6 text-left">
+                        <input class="form-control" id="editVendAddress1">
+                    </div>
+                </div>     
+                <div class="row">&nbsp;</div>
+                <div class="row">
+                    <div class="col-sm-2">&nbsp;</div>
+                    <div class="col-lg-2 text-right">
+                        <label>Address 2</label>
+                    </div>
+                    <div class="col-sm-6 text-left">
+                        <input class="form-control" id="editVendAddress2">
+                    </div>
+                </div> 
+                <div class="row">&nbsp;</div>
+                <div class="row">
+                    <div class="col-sm-2">&nbsp;</div>
+                    <div class="col-lg-2 text-right">
+                        <label>City</label>
+                    </div>
+                    <div class="col-sm-6 text-left">
+                        <input class ="form-control" id="editVendCity">
+                    </div>
+                </div> 
+                <div class="row">&nbsp;</div>
+                <div class="row">
+                    <div class="col-sm-2">&nbsp;</div>
+                    <div class="col-lg-2 text-right">
+                        <label>State</label>
+                    </div>
+                    <div class="col-sm-6 text-left">
+                        <select class="form-control" id="editVendState"></select>
+                    </div>
+                </div> 
+                <div class="row">&nbsp;</div>
+                <div class="row">
+                    <div class="col-sm-2">&nbsp;</div>
+                    <div class="col-lg-2 text-right">
+                        <label>Zipcode</label>
+                    </div>
+                    <div class="col-sm-6 text-left">
+                        <input type="text" id="editVendZip" class="form-control">
+                    </div>
+                </div>          
+                <div class="row">&nbsp;</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-warning" onclick="updateVendor()">
+                    <span class="glyphicon glyphicon-refresh"></span>&nbsp;Update Vendor
+                </button>&nbsp;
+                <button type="button" class="btn btn-outline-secondary" id="cancelAddAccountBtn" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add PO Vendor Modal -->
+
+<div class="modal" id="addPOVendModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header d-block alert-success">
+                <div class="row">
+                    <div class="col-lg-2">&nbsp;</div>
+                    <div class="col-lg-8">
+                        <h5 class="modal-title text-center">Add Purchase Order - Vendor</h5>
+                    </div>
+                    <div class="col-lg-2">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">  
+                <div class="row">
+                    <div class="col-sm-2">&nbsp;</div>
+                    <div class="col-lg-2 text-right">
+                        <label>Vendor</label>
+                    </div>
+                    <div class="col-sm-6 text-left">
+                        <select class="form-control" id="addPOVendor"></select>
+                    </div>
+                </div>
+                <div class="row">&nbsp;</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="startOrder">
+                    <span class="glyphicon glyphicon-forward"></span>&nbsp;Next
+                </button>&nbsp;
+                <button type="button" class="btn btn-outline-secondary" id="cancelAddTagBtn" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div> 
+
+<!-- Add Purchase Order Complete Modal -->
+
+<div class="modal" id="addPOCompleteModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header d-block alert-success">
+                <div class="row">
+                    <div class="col-lg-2">&nbsp;</div>
+                    <div class="col-lg-8">
+                        <h5 class="modal-title text-center">Add Purchase Order - Complete</h5>
+                    </div>
+                    <div class="col-lg-2">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">  
+                <div class="row">
+                    <div class="col-sm-2">&nbsp;</div>
+                    <div class="col-lg-2 text-right">
+                        <label>Vendor</label>
+                    </div>
+                    <div class="col-sm-6 text-left">
+                        <input type="hidden" id="addPOCompleteId">
+                        <label id="addPOCompleteVendor"></label>
+                    </div>
+                </div>
+                <div class="row">&nbsp;</div>
+                <div class="row">
+                    <div class="col-sm-1">&nbsp;</div>
+                    <div class="col-lg-10 text-center">
+                        <label>Items</label>
+                        <table class="table table-striped table-hover" id="polineitems">
+                            <thead class="table-info">
+                                <tr>
+                                    <th class="table-info">Action</th>
+                                    <th class="info">Item</th>
+                                    <th class="info">Quantity</th>
+                                    <th class="info">Cost Per Unit</th>
+                                    <th class="info">Subtotals</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td class="text-center" colspan="5">No items</td></tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td class="text-left" colspan="4">Total</td>
+                                    <td id="POTotal"></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">&nbsp;</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-success" id="addItemToPO">
+                    <span class="glyphicon glyphicon-plus"></span>&nbsp;Add Item
+                </button>&nbsp;
+                <button type="button" class="btn btn-success" id="completeOrder">
+                    <span class="glyphicon glyphicon-plus"></span>&nbsp;Complete Order
+                </button>&nbsp;
+                <button type="button" class="btn btn-outline-secondary" id="cancelPOBtn" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add part to part order modal -->
+
+<div class="modal" id="addPOPartModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header d-block alert-success">
+                <div class="row">
+                    <div class="col-lg-2">&nbsp;</div>
+                    <div class="col-lg-8">
+                        <h5 class="modal-title text-center">Add Purchase Order - Part</h5>
+                    </div>
+                    <div class="col-lg-2">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">  
+                <div class="row">
+                    <div class="col-sm-2">&nbsp;</div>
+                    <div class="col-lg-2 text-right">
+                        <label>Name</label>
+                    </div>
+                    <div class="col-sm-6 text-left">
+                        <select class="form-control" id="addPOVendor"></select>
+                    </div>
+                </div>
+                <div class="row">&nbsp;</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" id="startOrder">
+                    <span class="glyphicon glyphicon-forward"></span>&nbsp;Next
+                </button>&nbsp;
+                <button type="button" class="btn btn-outline-secondary" id="cancelAddTagBtn" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- normal page starts here -->
+
+<div class="row">&nbsp;</div>
+<div class="row">
+    <div class="col-sm-1">&nbsp;</div>
+    <div class="col-sm-10 text-center">
+        <div class="jumbotron">
+            <h1>Design Print Send LLC</h1>
+            <p>Wish it. Will it. Get it.</p>
+        </div>
+    </div>
+</div>
+<div class="row">&nbsp;</div>
+<div class="row">
+    <div class="col-lg-1">&nbsp;</div>
+    <div class="col-lg-10" role="navigation">
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a class="nav-link" href="http://dpsllc.com/index.html">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="http://dpsllc.com/finance/income.html">Finance</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="http://dpsllc.com/pos/neworder.html">Orders</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="http://dpsllc.com/products.html">Inventory</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="http://dpsllc.com/processing.html">Processing</a>
+            </li>
+            <li class="naV-item">
+                <a class="nav-link active" href="http://dpsllc.com/procurement/procurement.html">Procurement</a>
+
+            </li>
+        </ul>
+        <p>&nbsp;</p>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link" href="http://dpsllc.com/procurement/acctmanagement.html">Account Management</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="http://dpsllc.com/procurement/purchasing.html">Purchasing</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="http://dpsllc.com/procurement/history.html">Purchase History</a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="row">&nbsp;</div>
+<div class="row">
+    <div class="col-lg-1">&nbsp;</div>
+    <div class="col-lg-10 text-center">Purchasing</div>
+</div>
+<div class="row">&nbsp;</div>
+<div class="row">
+    <div class="col-lg-1">&nbsp;</div>
+    <div class="col-lg-5">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="text-center">Purchase Orders</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12 text-right">
+                        <div class="col-md-12 text-right">
+                            <button class="btn btn-success" onclick="addPurchaseOrder()">
+                                <span class="glyphicon glyphicon-plus"></span>&nbsp;Purchase Order
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">&nbsp;</div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-striped table-hover" id="purchaseorders">
+                            <thead class="table-info">
+                                <tr>
+                                    <th>Action</th>
+                                    <th>Name</th>
+                                    <th>Specialty</th>
+                                    <th>Ordered</th>
+                                    <th>Shipped</th>
+                                    <th>Received</th>
+                                </tr>
+                            </thead>
+                            <tbody><tr><td colspan="6" class="text-center">No Purchase Orders</td></tr></tbody>
+                        </table>
+                    </div>
+                </div>          
+            </div>
+        </div>
+
+    </div>
+    <div class="col-lg-3">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="text-center">Vendors</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12 text-right">
+                        <button class="btn btn-success" id="addVendor">
+                            <span class="glyphicon glyphicon-plus"></span>&nbsp;Vendor
+                        </button>
+                    </div>
+                </div>
+                <br>
+                <table class="table table-striped table-hover" id="vendors">
+                    <thead class="table-info">
+                        <tr>
+                            <th>Action</th>
+                            <th>Name</th>
+                            <th>Specialty</th>
+                        </tr>
+                    </thead>
+                    <tbody><tr><td colspan="3" class="text-center">No Vendors</td></tr></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="text-center">Delivery Times (historical)</h4>
+            </div>
+            <div class="card-body"  id="vendordelivery">
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

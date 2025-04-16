@@ -1,5 +1,5 @@
 <?php
-require "Tables/Finance/UpdateFinanceRepository.php";
+require "Tables/Finance/MainLedgerRepository.php";
 $id = $_POST["id"];
 $name = $_POST["name"];
 $transdate = $_POST["transdate"];
@@ -20,6 +20,6 @@ $cust_dict = array(
 );
 
 if (isset($cust_dict)) {
-    $db = new UpdateFinanceRepository();
+    $db = new MainLedgerRepository();
     $db->updateLedger($cust_dict);
 }

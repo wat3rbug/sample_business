@@ -8,8 +8,8 @@ function getWebDateFromDB(currentDate) {
 }
 function getDBDateFromJSDate(currentDate) {
 	if (currentDate == null) return "N/A";
-	var year = currentDate.getFullYear();
-	var month = currentDate.getMonth() + 1;
+	var year = currentDate.getUTCFullYear();
+	var month = currentDate.getUTCMonth() + 1;
 	var day = currentDate.getDate();
 	return year + "-" + month + "-" + day;
 }
@@ -49,3 +49,12 @@ function getStringDateForToday() {
 	var month = original.getMonth() + 1;
 	return year + "-" + month + "-" + day;
 }
+
+function getShortStringDateForToday() {
+	var original = new Date();
+	var year = original.getFullYear().substr(2);
+	var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+	var month = months[original.getMonth()];
+	return month + "-" + year;
+}
+

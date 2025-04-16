@@ -1,9 +1,9 @@
 <?php
-require "Tables/Finance/UpdateFinanceRepository.php";
+require "Tables/Finance/MainLedgerRepository.php";
 $id = $_POST["id"];
 // $id ="3";
 if (isset($id)) {
-    $db = new UpdateFinanceRepository();
+    $db = new MainLedgerRepository();
     $db->deleteLedgerEntry($id);
 }
 ?>

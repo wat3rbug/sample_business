@@ -136,10 +136,10 @@ function updateAsset() {
 }
 
 function clearAssetModals() {
-    var id = $('#editAssetId').val('');
-    var id = $('#editAssetName').val('');
-    var id = $('#editAssetAmount').val('');
-    var id = $('#editAssetDate').val('');
+    $('#editAssetId').val('');
+    $('#editAssetName').val('');
+    $('#editAssetAmount').val('');
+    $('#editAssetDate').val('');
 }
 
 function getDebit(expense, formatter) {
