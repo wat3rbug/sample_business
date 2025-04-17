@@ -144,7 +144,8 @@ create table vendors (
 	shipped date,
 	received date,
 	vendor int not null,
-	foreign key fk_po_vendor(vendor) references vendors(id)
+	foreign key fk_po_vendor(vendor) references vendors(id),
+	scheduled date
  ) engine = InnoDB;
 
  create table polineitems (
@@ -152,7 +153,7 @@ create table vendors (
 	partorder int not null,
 	foreign key fk_polineitem_po(partorder) references partorders(id),
 	quantity int not null default(1),
-	cost_per_unity decimal not null
+	cost_per_unit decimal not null
  ) engine = Innodb;
 
  create table tags (
