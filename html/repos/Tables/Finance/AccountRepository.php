@@ -93,5 +93,16 @@ class AccountRepository {
             $statement->execute();
         }
     }
+
+    function getPOAcctDropDown() {
+        $sql = "SELECT a.id, a.name, at.name as `type` FROM accounts AS a JOIN accounttypes AS at ON a.accounttype = at.id WHERE at.name != 'Revenue'";
+        $statement = $this->conn->prepare($sql);
+        $statement->execute();
+        $output = array();
+        while ($row = $statement->fetch()) {
+            $output[] = $row;
+        }
+        return $output;
+    }
 }
 ?>

@@ -26,14 +26,16 @@ class POLineItemRepository {
 
     function addPOLineItem($lineitem) {
         $po = $lineitem["partorder"];
+        $name = $lineitem["name"];
         $quantity = $lineitem["quantity"];
         $cost = $lineitem["cost"];
         if (isset($po) && isset($cost) && isset($quantity)) {
-            $sql = "INSERT INTO polineitems (partorder, quantity, cost_per_unit) VALUES (?, ?, ?)";
+            $sql = "INSERT INTO polineitems (partorder, quantity, cost_per_unit, `name`) VALUES (?, ?, ?, ?)";
             $statement =$this->conn->prepare($sql);
             $statement->bindParam(1, $po);
             $statement->bindParam(2, $quantity);
             $statement->bindParam(3, $cost);
+            $statement->bindParam(4, $name);
             $statement->execute();
         }
     }
