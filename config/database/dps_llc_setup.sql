@@ -145,7 +145,9 @@ create table vendors (
 	received date,
 	vendor int not null,
 	foreign key fk_po_vendor(vendor) references vendors(id),
-	scheduled date
+	scheduled date,
+	ledger int,
+	foreign key fk_po_ledger(ledger) references ledgerentries(id)
  ) engine = InnoDB;
 
  create table polineitems (
