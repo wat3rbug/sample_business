@@ -1,12 +1,13 @@
 <?php
 require "Tables/Finance/POLineItemRepository.php";
-$partorder = $_POST["partorder"];
-// $partorder = "2";
 
-if (isset($partorder)) {
+$id = $_POST["id"];
+// $id = "1";
+
+ if (isset($id)) {
     $db = new POLineItemRepository();
-    $data = $db->getLineItemsForPO($partorder);
+    $data = $db->getLineItem($id);
     header('Content-type: application/json');
     echo json_encode($data);
-}
-?>
+ }
+ ?>

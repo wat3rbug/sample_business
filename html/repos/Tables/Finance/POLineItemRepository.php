@@ -23,13 +23,26 @@ class POLineItemRepository {
             throw new \PDOException($e->getMessage(), (int)$e->getCode());
         }
     }
+    function getLineItem($id) {
+        if (isset($id)) {
+            $sql = "SELECT * FROM polineitems WHERE id = ?";
+            $statement = $this->conn->prepare($sql);
+            $statement->bindParam(1, $id);
+            $statement->execute();
+            $output = array();
+            while ($row = $statement->fetch()) {
+                $output[] = $row;
+            }
+            return $output;
+        }
+    }
 
     function addPOLineItem($lineitem) {
         $po = $lineitem["partorder"];
         $name = $lineitem["name"];
         $quantity = $lineitem["quantity"];
         $cost = $lineitem["cost"];
-        if (isset($po) && isset($cost) && isset($quantity)) {
+        if (isset($po) && isset($cost) && isset($quantity) && isset($name)) {
             $sql = "INSERT INTO polineitems (partorder, quantity, cost_per_unit, `name`) VALUES (?, ?, ?, ?)";
             $statement =$this->conn->prepare($sql);
             $statement->bindParam(1, $po);
@@ -56,16 +69,19 @@ class POLineItemRepository {
 
     function updateLineItem($lineitem) {
         $id = $lineitem["id"];
-        $po = $lineitem["partorder"];
-        $quantity = $lineitem["quantity"];
+        $name = $lineitem["name"];
         $cost = $lineitem["cost"];
-        if (isset($id) && isset($po) && isset($cost) && isset($quantity)) {
-            $sql = "UPDATE polineitems SET partorder = ?, quantity = ?, cost_per_unit = ? WHERE id = ?";
+        $quantity = $lineitem["quantity"];
+        $po = $lineitem["partorder"];
+
+        if (isset($id) && isset($po) && isset($cost) && isset($quantity) && isset($name)) {
+            $sql = "UPDATE polineitems SET partorder = ?, quantity = ?, cost_per_unit = ?, `name` = ? WHERE id = ?";
             $statement =$this->conn->prepare($sql);
             $statement->bindParam(1, $po);
             $statement->bindParam(2, $quantity);
             $statement->bindParam(3, $cost);
-            $statement->bindParam(4, $id);
+            $statement->bindParam(4, $name);
+            $statement->bindParam(5, $id);
             $statement->execute();
         }
     }

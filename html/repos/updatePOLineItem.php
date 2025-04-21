@@ -2,23 +2,21 @@
 require "Tables/Finance/POLineItemRepository.php";
 
 $partorder = $_POST["partorder"];
+$id = $_POST["id"];
 $name = $_POST["name"];
 $quantity = $_POST["quantity"];
 $cost = $_POST["cost"];
 
-// $name = "filament";
-// $quantity = "1";
-// $cost = "19.99";
-// $partorder = "1";
-
 $lineitem = array(
-    "partorder" => $partorder,
+    "id" => $id,
     "name" => $name,
+    "cost" => $cost,
     "quantity" => $quantity,
-    "cost" => $cost
+    "partorder" => $partorder
 );
 
-if (isset($partorder) && isset($name) && isset($quantity) && isset($cost)) {
+ if (isset($id) && isset($name) && isset($quantity) && isset($cost) && isset($partorder)) {
     $db = new POLineItemRepository();
-    $db->addPOLineItem($lineitem);
-}
+    $db->updateLineItem($lineitem);
+ }
+ ?>

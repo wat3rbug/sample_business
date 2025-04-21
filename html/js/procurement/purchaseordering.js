@@ -51,17 +51,30 @@ function clearPOModals() {
 function startOrder() {
     var vendor = $('#addPOVendor').val();
     $.ajax({
-        url: "/repos/addPartOrder.php",
+        url: "/repos/getVendorById.php",
         type: "post",
-        data: {
+        data:{
             "vendor": vendor
         },
         success: function(results) {
             if (results != null && results.length > 0) {
-                $('#addPOModal').modal('toggle');
-                $('#addPOId').val(results[0].id);
-                $('#addPOCompleteId').val(results[0].id);
-                $('#addPOCompleteModal').modal('toggle');
+                var POVendor = results[0].name;
+                $('#addPOCompleteVendor').text(POVendor);
+                $.ajax({
+                    url: "/repos/addPartOrder.php",
+                    type: "post",
+                    data: {
+                        "vendor": vendor
+                    },
+                    success: function(results) {
+                        if (results != null && results.length > 0) {
+                            $('#addPOModal').modal('toggle');
+                            $('#addPOId').val(results[0].id);
+                            $('#addPOCompleteId').val(results[0].id);       
+                            $('#addPOCompleteModal').modal('toggle');
+                        }
+                    }
+                });
             }
         }
     });
@@ -80,81 +93,6 @@ function cancelPO() {
     });
 }
 
-function clearLineItemModal() {
-    $('#addLineItemName').val('');
-    $('#addLineItemQty').val('');
-    $('#addLineItemCost').val('');
-}
-
-function addLineItem() {
-    clearLineItemModal();
-    $('#addPOCompleteModal').modal('toggle');
-    $('#addPOLineItemModal').modal('toggle');
-}
-
-function addItemToPO() {
-    var name = $('#addLineItemName').val();
-    var qty = $('#addLineItemQty').val();
-    var cost = $('#addLineItemCost').val();
-    var partorder = $('#addPOCompleteId').val();
-    $.ajax({
-        url: "/repos/addPOLineItem.php",
-        type: "post",
-        data: {
-            "name" : name,
-            "qty": qty,
-            "cost": cost,
-            "partorder": partorder
-        },
-        success: function(results) {
-            $('#addPOLineItemModal').modal('toggle');
-            clearLineItemModal();
-            $('#addPOCompleteModal').modal('toggle');
-            buildLineItemTables(partorder);
-        }
-    });
-}
-
-function buildLineItemTables(partorder) {
-    $.ajax({
-        url: "/repos/getLineItemsForPO.php",
-        type: "post",
-        data: {
-            "partorder": partorder
-        },
-        success: function(results) {
-            if (results != null && results.length > 0) {
-                $('#polineitems tbody').empty();
-                for (i = 0; i < results.length; i++) {
-                     var lineitem = results[i];
-                    var row = '<tr><td style="width: 65px">';
-                    row += getPOActionBtns(lineitem) + '</td>';
-                    row += '<td>' + lineitem.name + '</td>';
-                    row += '<td>' + lineitem.quantity + '</td>';
-                    row += '<td>' + getCurrency(lineitem.cost_per_unit) + '</td>';
-                    row += '<td>' + getCurrency(lineitem.quantity * lineitem.cost_per_unit) + '</td>';
-                    row += '</tr>';
-                    $('#polineitems tbody').append(row);
-                }
-            }
-        }
-    });
-}
-
-function getPOActionBtns(lineitem) {
-    var btn = getPOEditBtn(lineitem);
-    btn += getPODeleteBtn(lineitem);
-    return btn;
-}
-
-function getPOEditBtn(lineitem) {
-    var btn = '<button class="btn btn-link title="Edit Item" ';
-    btn += ' style="border:none; padding: 2px" onclick="editItem(';
-    btn += lineitem.id + ')"><span class="glyphicon glyphicon-pencil"></span>';
-    btn += '</button>';
-    return btn;
-}
-
 function editItem(id) {
     
     $.ajax({
@@ -170,28 +108,6 @@ function editItem(id) {
  
 }
 
-function deleteItem(id) {
-    $.ajax({
-        url: "/repos/deletePOLineItem.php",
-        type: "post",
-        data: {
-            "id": id
-        },
-        success: function(results) {
-            var partorder = $('#addPOCompleteId').val();
-            buildLineItemTables(partorder);
-        }
-    })
-}
-
-function getPODeleteBtn(lineitem) {
-    var btn = '<button class="btn btn-link title="Delete Item" ';
-    btn += ' style="border:none; padding: 2px" onclick="deleteItem(';
-    btn += lineitem.id + ')"><span class="glyphicon glyphicon-remove"></span>';
-    btn += '</button>';
-    return btn;
-}
-
 function getCurrency(amount) {
     let formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
@@ -203,27 +119,109 @@ function getCurrency(amount) {
       return formatter.format(amount);
 }
 
-function addPOLineItem() {
-    var name = $('#addLineItemName').val();
-    $('#addLineItemName').val('');
-    var qty = $('#addLineItemQty').val();
-    $('#addLineItemQty').val('');
-    var cost = $('#addLineItemCost').val();
-    $('#addLineItemCost').val('');
-    $('#addPOLineItemModal').modal('toggle');
-    $('#addPOCompleteModal').modal('toggle');
-    var id = $('#addPOCompleteId').val(); // dont remove, its the PO
+function completeOrder() {
+    var po = $('#addPOCompleteId').val();
+    var acct = $('#addPOAcct').val();
     $.ajax({
-        url: "/repos/addPOLineItem.php",
+        url: "/repos/completePO.php",
         type: "post",
         data: {
-            "id": id,
-            "name": name,
-            "quantity": qty,
-            "cost": cost
+            "id": po,
+            "account": acct
         },
         success: function(results) {
-            buildLineItemTables(id);
+            $('#addPOCompleteModal').modal('toggle');
+            buildPOTable();
         }
     })
+}
+
+function buildPOTable() {
+    $.ajax({
+        url: "/repos/getPOs.php",
+        dataType: "json",
+        success: function(results) {
+            $('#purchaseorders tbody').empty();
+            if (results == null || results.length == 0) {
+                var empty = '<tr><td colspan="6" class="text-center">No POs</td></tr>';
+                $('#purchaseorders tbody').append(empty);   
+            } else {
+                for (i = 0; i < results.length; i++) {
+                    var po = results[i];
+                }
+                var line = '<tr><td>' + getPOActionBtns(po) + '</td>';
+                line += '<td>' + getShipStat(po.shipped) + '</td>';
+                line += '<td>' + getShipStat(po.received) + '</td>';
+                line += '<td>' + getShipStat(po.eta) + '</td>';
+                line += '<td>' + getOnTime(po.received, po.eta) + '</td>';
+                line += '</tr>';
+                $('#purchaseorders tbody').append(line); 
+            }
+        }
+    });
+}
+
+function getPOActionBtns(po) {
+    btn = getPOInfoBtn(p);
+    btns += getDeletePOBtn(po);
+    btns += getShippedPOBtn(po);
+    btns += getRcvdPOBtn(po);
+    return btns;
+}
+
+function getRcvdPOBtn(po) {
+    // do this
+    return "";
+}
+
+function getShippedPOBtn(po) {
+    // do this
+    return "";
+}
+
+function getDeletePOBtn(po) {
+    var btn = '<button class="btn btn-link" title"Delete Purchase Order"';
+    btn +=' onclick="deletePO(' + po.id + ')" style="border:none; padding: 2px">';
+    btn += '<span class="glyphicon glyphicon-remove"></span></button>';
+    return btn;
+}
+
+function getPOInfoBtn(po) {
+    var btn = '<button class="btn btn-link" title"Purchase Order Details"';
+    btn +=' onclick="showDetails(' + po.id + ')" style="border:none; padding: 2px">';
+    btn += '<span class="glyphicon glyphicon-question"></span></button>';
+    return btn;
+}
+
+function showDetails(id) {
+    $.ajax({
+        url: "/repos/getPurchaseOrderById.php",
+        type: "post",
+        data: {
+            "id": id
+        },
+        success: function(results) {
+            if (results != null && results.length > 0) {
+                $('#showPOModal').modal('toggle');
+                // do stuff here and build modal
+            }
+        }
+    })
+}
+
+function getShipStat(stat) {
+    if (stat == null || stat == "") {
+        return " --";
+    } return getTransDate(stat);
+}
+
+function getOnTime(received, eta) {
+    if ((received == null || received == "") && getTransDate(new Date()) <  eta) {
+        return " --";
+    }
+    if (received  <= eta) {
+        return "YES";
+    } else {
+        return "NO";
+    }
 }

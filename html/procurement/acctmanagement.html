@@ -157,14 +157,25 @@
                     <div class="col-sm-6 text-left">
                         <select class="form-control" id="addPOVendName">
                     </div>
-                </div>            
+                </div>
+                <div class="row">&nbsp;</div>
+                <div class="row">
+                    <div class="col-sm-2">&nbsp;</div>
+                    <div class="col-lg-2 text-right">
+                        <label>Entry Type</label>
+                    </div>
+                    <div class="col-sm-6 text-left">
+                        <select class="form-control" id="editAcctType">
+                        </select>
+                    </div>
+                </div>              
                 <div class="row">&nbsp;</div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success">
-                    <span class="glyphicon glyphicon-fastforward"></span>&nbsp;Next
+                <button type="button" class="btn btn-warning" onclick="updateAccount()">
+                    <span class="glyphicon glyphicon-refresh"></span>&nbsp;Update Account
                 </button>&nbsp;
-                <button type="button" class="btn btn-outline-secondary" id="cancelAddPOBtn" data-dismiss="modal">
+                <button type="button" class="btn btn-outline-secondary" id="cancelEditAccountBtn" data-dismiss="modal">
                     <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;Cancel
                 </button>
             </div>
