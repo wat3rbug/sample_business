@@ -71,6 +71,18 @@ class MainLedgerRepository {
         } 
     }
 
+    function completePurchaseOrder($cust_dict) {
+        $account =$cust_dict["account"];
+        $amount = $cust_dict["amount"];
+        $transdate = $cust_dict["transdate"];
+        $sql = "INSERT INTO ledgerentries (trans, account, amount) VALUES (?, ?, ?)";
+        $statement = $this->conn->prepare($sql);
+        $statement->bindParam(1, $transdate);
+        $statement->bindParam(2, $account);
+        $statement->bindParam(3, $amount);
+        $statement->execute();
+    }
+
     function deleteLedgerEntry($id) {
         if (isset($id)) {
             $sql = "DELETE FROM ledgerentries WHERE id = ?";
@@ -78,5 +90,33 @@ class MainLedgerRepository {
             $statement->bindParam(1, $id);
             $statement->execute();
         }
+    }
+
+    function addTransaction() {
+        $sql ="INSERT INTO transations (transdate) VALUES(curdate())";
+        $statement = $this->conn->prepare($sql);
+        $statement->execute();
+    }
+
+    function getLastTransaction() {
+        $sql = "SELECT transdate FROM transactions ORDER BY id DESC LIMIT 1";
+        $statement = $this->conn->prepare($sql);
+        $statement->execute();
+        $output = array();
+        while ($row = $statement->fetch()) {
+            $output[] = $row;
+        }
+        return $output;
+    }
+
+    function getLastLedgerEntry() {
+        $sql = "SELECT * FROM ledgerentries ORDER BY id DESC LIMIT 1";
+        $statement = $this->conn->prepare($sql);
+        $statement->execute();
+        $output = array();
+        while ($row = $statement->fetch()) {
+            $output[] = $row;
+        }
+        return $output;
     }
 }

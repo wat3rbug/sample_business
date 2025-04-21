@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<head>
+    <meta charsset="utf-8">
+    <title>Design Print Send LLC</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/frozenheader.css">
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+    <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico"/>
+
+    <script src="/jquery-3.3.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+	
+    <script src="/js/nav.js"></script>
+    <script src="/js/products.js"></script>
+	<script src="/js/calc.js"></script>
+</head>
+<body>
+     <!-- Edit Product modal-->
+
+<div class="modal" id="editProdModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header d-block alert-warning">
+				<div class="row">
+					<div class="col-lg-2">&nbsp;</div>
+					<div class="col-lg-8">
+						<h5 class="modal-title text-center">Update Product</h5>
+					</div>
+					<div class="col-lg-2">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="modal-body">
+				
+				<div class="row">
+					<div class="col-sm-2">&nbsp;</div>
+                    <div class="col-lg-2 text-right">
+                        <label>Name</label>
+                    </div>
+					<div class="col-sm-6 text-left">
+                        <input type="hidden" id="editProdId" />
+						<input type="text" class="form-control" id="editProdName">
+					</div>
+				</div>
+				<div class="row">&nbsp;</div>
+				<div class="row">
+					<div class="col-sm-2 text-right">&nbsp;</div>
+                    <div class="col-lg-2 text-right"><label>URL</label></div>
+					<div class="col-sm-6 text-left">
+						<input type="text" class="form-control" id="editProdUrl" />
+					</div>
+				</div>
+				<div class="row">&nbsp;</div>
+				<div class="row">
+					<div class="col-sm-2">&nbsp;</div>
+					<div class="col-sm-4 text-right">Photo</div>
+					<div class="col-sm-4">
+						<div class="input-group">
+							<div class='input-group-addon'>
+								<span class="glyphicon glyphicon-picture"></span>
+							</div>
+							<input type="text" class="form-control" id="editProdPhoto">
+						</div>
+					</div>
+				</div>
+				<div class="row">&nbsp;</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-warning" onclick="updateProduct()">
+					<span class="glyphicon glyphicon-refresh"></span>&nbsp;Update Product
+				</button>&nbsp;
+				<button type="button" class="btn btn-outline-secondary" id="cancelEditProductBtn" data-dismiss="modal">
+					<span class="glyphicon glyphicon-ban-circle"></span>&nbsp;Cancel
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- add Product modal-->
+
+<div class="modal" id="addProdModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header d-block alert-success">
+				<div class="row">
+					<div class="col-lg-2">&nbsp;</div>
+					<div class="col-lg-8">
+						<h5 class="modal-title text-center">Add Product</h5>
+					</div>
+					<div class="col-lg-2">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="modal-body">
+				
+				<div class="row">
+					<div class="col-sm-2">&nbsp;</div>
+                    <div class="col-lg-2 text-right">
+                        <label>Name</label>
+                    </div>
+					<div class="col-sm-6 text-left">
+						<input type="text" class="form-control" id="addProdName">
+					</div>
+				</div>
+				<div class="row">&nbsp;</div>
+				<div class="row">
+					<div class="col-sm-2 text-right">&nbsp;</div>
+                    <div class="col-lg-2 text-right"><label>URL</label></div>
+					<div class="col-sm-6 text-left">
+						<input type="text" class="form-control" id="addProdUrl" />
+					</div>
+				</div>
+				<div class="row">&nbsp;</div>
+				<div class="row">
+					<div class="col-sm-2">&nbsp;</div>
+					<div class="col-sm-4 text-right">Photo</div>
+					<div class="col-sm-4">
+						<div class="input-group">
+							<div class='input-group-addon'>
+								<span class="glyphicon glyphicon-picture"></span>
+							</div>
+							<input type="text" class="form-control" id="addProdPhoto"/>
+						</div>
+					</div>
+				</div>
+            </div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success" onclick="addProduct()">
+					<span class="glyphicon glyphicon-cloud-upload"></span>&nbsp;Add Product
+				</button>&nbsp;
+				<button type="button" class="btn btn-outline-secondary" id="cancelAddProductBtn" data-dismiss="modal">
+					<span class="glyphicon glyphicon-ban-circle"></span>&nbsp;Cancel
+				</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- normal page -->
+
+<div class="row">&nbsp;</div>
+<div class="row">
+    <div class="col-sm-1">&nbsp;</div>
+    <div class="col-sm-10 text-center">
+        <div class="jumbotron">
+            <h1>Design Print Send LLC</h1>
+            <p>Wish it, will it, get it.</p>
+        </div>
+    </div>
+</div>
+<div class="row">&nbsp;</div>
+<div class="row">
+    <div class="col-lg-1">&nbsp;</div>
+    <div class="col-lg-10" role="navigation">
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a class="nav-link" href="http://dpsllc.com/index.html">Home</a>
+            </li>
+            <li class="nav-item">
+
+                <a class="nav-link" href="http://dpsllc.com/finance/income.html">Finance</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="http://dpsllc.com/pos/neworder.html">Orders</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="http://dpsllc.com/inventory/products.html">Inventory</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="http://dpsllc.com/processing.html">Processing</a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-lg-1">&nbsp;</div>
+</div>
+<div class="row">&nbsp;</div>
+<div class="row">
+    <div class="col-lg-1">&nbsp;</div>
+    <div class="col-lg-10">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" href="http://dpsllc.com/inventory/products.html">Products</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="http://dpsllc.com/inventory/inventory.html">Inventory</a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-lg-1">&nbsp;</div>
+</div>
+<div class="row">&nbsp;</div>
+<div class="row">
+    <div class="col-lg-1">&nbsp;</div>
+    <div class="col-lg-7">
+		<div class="row">
+			<div class="col-md-10">&nbsp;</div>
+			<div class="col-md-2 text-right">
+				<button type="button" class="btn btn-success addProdBtn">
+					<span class="glyphicon glyphicon-plus"></span>&nbsp;Product
+				</button>
+			</div>
+		</div>
+		<div class="row">&nbsp;</div>
+		<div class="row">
+			<div class="col-md-12">
+		        <h4 class="text-center">Products</h4>
+        		<table class="table table-striped products">
+            		<thead>
+                		<tr>
+                    		<th class="info">Action</th>
+                    		<th class="info">Name</th>
+                    		<th class="info">URL</th>
+                    		<th class="info">Photo</th>
+                		</tr>
+            		</thead>
+            		<tbody>
+            		</tbody>
+        		</table>
+			</div>
+		</div>
+    </div>
+	<div class="col-lg-3">
+		<div class="card">
+			<div class="card-header">
+				<h4 class="text-center">Product Pricing Calculator</h4>
+			</div>
+			<div class="card-body">
+				<ul class="list-group list-group-flush">
+					<li class="list-group-item">
+						<div class="card-title">Materials</div>
+						<div class="row">
+							<div class="col-md-6 text-right">
+								<b>Filament Spool Cost</b>
+							</div>
+							<div class="col-md-6">
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">$</span>
+									</div>
+									<input class="form-control" id="spoolcost">
+								</div>
+							</div>
+						</div>
+						<div class="row">&nbsp;</div>
+						<div class="row">
+							<div class="col-md-6 text-right">
+								<b>Spool Size(in kgs)</b>
+							</div>
+							<div class="col-md-6">
+								<input type="number" class="form-control" id="spoolsize">
+							</div>
+						</div>
+						<div class="row">&nbsp;</div>
+						<div class="row">
+							<div class="col-md-6 text-right">
+								<b>Filament Used (grams)</b>
+							</div>
+							<div class="col-md-6">
+								<input type="number" class="form-control" id="spoolamount">
+							</div>
+						</div>
+					</li>
+					<li class="list-group-item">
+						<div class="card-title">Shipping Material</div>
+						<div class="row">
+							<div class="col-md-6 text-right">
+								<b>Shipping cost</b>
+							</div>
+							<div class="col-md-6">
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">$</span>
+									</div>
+									<input type="number" class="form-control" id="shippingcost">
+								</div>
+							</div>
+						</div>
+					</li>
+					<li class="list-group-item">
+						<div class="card-title">Labor</div>
+						<div class="row">
+							<div class="col-md-6 text-right">
+								<b>Labor / task / time</b>
+							</div>
+							<div class="col-md-6">
+								<input type="number" class="form-control" id="laboramount">
+							</div>
+						</div>
+						<div class="row">&nbsp;</div>
+						<div class="row">
+							<div class="col-md-6 text-right">
+								<b>Labor Rate ($/hr)</b>
+							</div>
+							<div class="col-md-6">
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">$</span>
+									</div>
+									<input type="number" placeholder="20" class="form-control" id="laborrate">
+								</div> 
+							</div>
+						</div>
+					</li>
+					<li class="list-group-item">
+						<div class="card-title">Machine Cost</div>
+						<div class="row">
+							<div class="col-md-6 text-right">
+								<b>Print Time</b>
+							</div>
+							<div class="col-md-6">
+								<input type="number" class="form-control" id="printtime">
+							</div>
+						</div>
+						<div class="row">&nbsp;</div>
+						<div class="row">
+							<div class="col-md-6 text-right">
+								<b>Power (kW/hr) Cost</b>
+							</div>
+							<div class="col-md-6">
+								<input type="number" class="form-control" id="power">
+							</div>
+						</div>
+					</li>
+					<li class="list-group-item">
+						<div class="row">
+							<div class="col-md-6 text-right">
+								<b>Total Price</b>
+							</div>
+							<div class="col-md-6">
+								<div class="input-group">
+									<div class="input-group-prepend">
+										<span class="input-group-text">$</span>
+									</div>
+									<input type="text" id="Total" class="form-control">
+								</div>
+							</div>
+						</div>
+					</li>
+				</ul>			
+			</div>
+			<div class="card-footer text-right">
+				<button class="btn btn-info" onclick="calcPrice()">
+					<span class="glyphicon glyphicon-stats"></span>&nbsp;Calculate
+				</button>
+			</div>
+		</div>
+	</div>
+    <div class="col-lg-1">&nbsp;</div>
+</div>
+<div class="row">&nbsp;</div>
+</body>
+</html>

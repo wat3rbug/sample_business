@@ -122,12 +122,14 @@ function getCurrency(amount) {
 function completeOrder() {
     var po = $('#addPOCompleteId').val();
     var acct = $('#addPOAcct').val();
+    var amount = getTotalForPO();
     $.ajax({
         url: "/repos/completePO.php",
         type: "post",
         data: {
             "id": po,
-            "account": acct
+            "account": acct,
+            "amount": amount
         },
         success: function(results) {
             $('#addPOCompleteModal').modal('toggle');

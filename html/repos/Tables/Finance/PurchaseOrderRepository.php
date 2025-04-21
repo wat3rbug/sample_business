@@ -81,6 +81,16 @@ class PurchaseOrderRepository {
 
     }
 
+    function addLedgerToPO($id, $ledger) {
+        if (isset($id) && isset($ledger)) {
+            $sql = "UPDATE partorders SET ledger = ? WHERE id = ?";
+            $statement =$this->conn->prepare($sql);
+            $statement->bindParam(1, $ledger);
+            $statement->bindParam(2, $id);
+            $statement->execute();
+        }
+    }
+
     function deletePurchaseOrder($id) {
         if (isset($id)) {
             $sql = "DELETE FROM partorders WHERE id = ?";

@@ -4,10 +4,10 @@ drop user 'posuser'@'10.0.0.%';
 drop user 'posuser'@'localhost';
 flush privileges;
 
-create user 'dpsllcuser'@'10.0.0.%' identified by '1989E30BMW325i';
-create user 'dpsllcuser'@'localhost' identified by '1989E30BMW325i';
-create user 'posuser'@'localhost' identified by '2002E46BMW325i';
-create user 'posuser'@'10.0.0.%' identified by '2002E46BMW325i';
+create user 'dpsllcuser'@'10.0.0.%' identified by 'password1';
+create user 'dpsllcuser'@'localhost' identified by 'password1';
+create user 'posuser'@'localhost' identified by 'password2';
+create user 'posuser'@'10.0.0.%' identified by 'password2';
 flush privileges;
 
 grant select on *.* to 'dpsllcsuser'@'10.0.0.%';
