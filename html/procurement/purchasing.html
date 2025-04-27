@@ -495,9 +495,19 @@
                 <div class="row">
                     <div class="col-sm-2">&nbsp;</div>
                     <div class="col-lg-2 text-right">
+                        <label>Name or Description</label>
+                    </div>
+                    <div class="col-sm-6 text-left">                 
+                        <input class="form-control" id="addPOCompleteName">
+                    </div>
+                </div>
+                <div class="row">&nbsp;</div>
+                <div class="row">
+                    <div class="col-sm-2">&nbsp;</div>
+                    <div class="col-lg-4 text-right">
                         <label>Vendor</label>
                     </div>
-                    <div class="col-sm-6 text-left">
+                    <div class="col-sm-4 text-left">
                         <input type="hidden" id="addPOCompleteId">
                         <label id="addPOCompleteVendor"></label>
                     </div>
@@ -505,14 +515,43 @@
                 <div class="row">&nbsp;</div>
                 <div class="row">
                     <div class="col-sm-2">&nbsp;</div>
-                    <div class="col-sm-2 text-right">
+                    <div class="col-lg-4 text-right">
+                        <label>Scheduled ETA</label>
+                    </div>
+                    <div class="col-sm-4 text-left">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <span class="glyhicon glyphicon-calendar"></span>
+                            </div>
+                            <input type="date" class="form-control" id="addPOCompleteEta">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">&nbsp;</div>
+                <div class="row">
+                    <div class="col-sm-2">&nbsp;</div>
+                    <div class="col-sm-4 text-right">
                         <label>Payment Account</label>
                     </div>
-                    <div class="col-sm-6 text-left">
+                    <div class="col-sm-4 text-left">
                         <select class="form-control" id="addPOAcct">
                         </select>
                     </div>
                 </div>
+                <div class="row">&nbsp;</div>
+                <div class="row">
+                    <div class="col-sm-2">&nbsp;</div>
+                    <div class="col-sm-4 text-right">
+                        <label>Entry Type</label>
+                    </div>
+                    <div class="col-sm-4 text-left">
+                        <select class="form-control" id="addPOEntryType">
+                            <option value="0">Debit</option>
+                            <option value="1">Credit</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">&nbsp;</div>
                 <div class="row">
                     <div class="col-sm-1">&nbsp;</div>
                     <div class="col-lg-10 text-center">
@@ -602,6 +641,117 @@
     </div>
 </div>
 
+<!-- PODetails Modal -->
+
+<div class="modal" id="showPODetailsModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header d-block alert-info">
+                <div class="row">
+                    <div class="col-lg-2">&nbsp;</div>
+                    <div class="col-lg-8">
+                        <h5 class="modal-title text-center">Purchase Order Details</h5>
+                    </div>
+                    <div class="col-lg-2">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">  
+                <div class="modal-body">  
+                    <div class="row">
+                        <div class="col-sm-2">&nbsp;</div>
+                        <div class="col-lg-4 text-right">
+                            <label>Name or Description</label>
+                        </div>
+                        <div class="col-sm-4 text-left">                 
+                            <label id="showPOName"></label>
+                        </div>
+                    </div>
+                    <div class="row">&nbsp;</div>
+                    <div class="row">
+                        <div class="col-sm-2">&nbsp;</div>
+                        <div class="col-lg-4 text-right">
+                            <label>Vendor</label>
+                        </div>
+                        <div class="col-sm-4 text-left">
+                            <label id="showPOVendor"></label>
+                        </div>
+                    </div>
+                    <div class="row">&nbsp;</div>
+                    <div class="row">
+                        <div class="col-sm-2">&nbsp;</div>
+                        <div class="col-sm-4 text-right">
+                            <label>Payment Account</label>
+                        </div>
+                        <div class="col-sm-4 text-left">
+                            <label id="showPOAcct"></label>
+                        </div>
+                    </div>
+                    <div class="row">&nbsp;</div>
+                    <div class="row">
+                        <div class="col-sm-2">&nbsp;</div>
+                        <div class="col-sm-4 text-right">
+                            <label>Entry Type</label>
+                        </div>
+                        <div class="col-sm-4 text-left">
+                            <select class="form-control disabled" id="showPOEntryType">
+                                <option value="0">Debit</option>
+                                <option value="1">Credit</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">&nbsp;</div>
+                    <div class="row">
+                        <div class="col-sm-2">&nbsp;</div>
+                        <div class="col-sm-4 text-right">ETA</div>
+                        <div class="col-sm-4"><label id="showPOEta"></label></div>
+                    </div>
+                    <div class="row">&nbsp;</div>
+
+                    <div class="row">
+                        <div class="col-sm-1">&nbsp;</div>
+                        <div class="col-lg-10 text-center">
+                            <label>Items</label>
+                            <table class="table table-striped table-hover" id="showpolineitems">
+                                <thead class="table-info">
+                                    <tr>
+                                        <th class="info">Item</th>
+                                        <th class="info">Quantity</th>
+                                        <th class="info">Cost Per Unit</th>
+                                        <th class="info">Subtotals</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center" colspan="4">
+                                            No items
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td class="text-left" colspan="3">Total</td>
+                                        <td id="showPOTotal"></td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">&nbsp;</div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" id="closeShowPOModal" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-remove"></span>&nbsp;Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- normal page starts here -->
 
 <div class="row">&nbsp;</div>
@@ -663,7 +813,7 @@
     <div class="col-lg-5">
         <div class="card">
             <div class="card-header">
-                <h4 class="text-center">Purchase Orders</h4>
+                <h4 class="text-center">Outstanding Purchase Orders</h4>
             </div>
             <div class="card-body">
                 <div class="row">
@@ -682,14 +832,15 @@
                             <thead class="table-info">
                                 <tr>
                                     <th>Action</th>
+                                    <th>Name</th>
                                     <th>Ordered</th>
                                     <th>Shipped</th>
                                     <th>Received</th>
                                     <th>ETA</th>
-                                    <th>On Time</th>
+                                    <th>Vendor</th>
                                 </tr>
                             </thead>
-                            <tbody><tr><td colspan="6" class="text-center">No Purchase Orders</td></tr></tbody>
+                            <tbody><tr><td colspan="7" class="text-center">No Purchase Orders</td></tr></tbody>
                         </table>
                     </div>
                 </div>          
@@ -727,7 +878,7 @@
     <div class="col-lg-2">
         <div class="card">
             <div class="card-header">
-                <h4 class="text-center">Delivery Times (historical)</h4>
+                <h4 class="text-center">Delivery Times (in days)</h4>
             </div>
             <div class="card-body"  id="vendordelivery">
             </div>

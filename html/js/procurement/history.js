@@ -17,24 +17,23 @@ $(document).ready(function() {
         todayHighlight: true
     });
 
+    buildDefaultHistoryTable();
+
     $('#cancelEditEntryBtn').on('click', function() {
         $('editEntryModal').modal('toggle');
     });
 
     $('#periodBtn').on('click', function() {
         var raw = $('.periodCal').datepicker('getDate');
-        var current = getDBDateFromJSDate(raw);
+        var current = JSToDB(raw);
         buildHistoryTable(current);
     })
-    // var current = getShortStringDateForToday();
-    // $('.periodCal').datepicker('setDate', current);
 
     $('#periodCalBtn').on('click', function() {
         var current = $('.periodCal').datepicker('getDate');
         buildHistoryTable(current);
     });
 
-    buildDefaultHistoryTable();
 });
 
 function buildHistoryTable(current) {
@@ -69,15 +68,17 @@ function buildHistoryTable(current) {
 }
 
 function buildDefaultHistoryTable() {
-    $('.periodCal').datepicker('setDate',(new Date()));
-    var current = getDBDateFromJSDate(new Date());
-    buildHistoryTable(current);
+    var current = new Date();
+    var datepickerDate = JSToDatepicker(current);
+    $('.periodCal').datepicker('setDate',datepickerDate);
+    var currentToDB = JSToDB(current);
+    buildHistoryTable(currentToDB);
 
 }
 
 function buildTableRow(entry, formatter) {
     var line = '<tr><td style="width: 65px">' + getActionBtns(entry.id);
-    line += '</td><td>' + getWebDateFromDBString(entry.transdate) + '</td>';
+    line += '</td><td>' + DBToString(entry.transdate) + '</td>';
     line += '<td>' + entry.name + '</td>';
     line += '<td>' + getDebit(entry, formatter) + '</td>';
     line += '<td>' + getCredit(entry, formatter) + '</td>';

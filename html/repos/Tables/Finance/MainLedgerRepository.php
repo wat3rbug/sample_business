@@ -26,7 +26,7 @@ class MainLedgerRepository {
 
     function getPurchaseHistoryByMonth($current) {
         if (isset($current)) {
-            $sql = "SELECT l.*, t.transdate, a.name AS accountname, at.name AS accounttype  FROM ledgerentries AS l JOIN transactions AS t ON l.trans = t.id JOIN accounts AS a ON a.id = l.account JOIN accounttypes AS at ON at.id = a.accounttype WHERE MONTH(?) AND YEAR(?) ORDER BY transdate, id";
+            $sql = "SELECT l.*, t.transdate, a.name AS accountname, at.name AS accounttype  FROM ledgerentries AS l JOIN transactions AS t ON l.trans = t.id JOIN accounts AS a ON a.id = l.account JOIN accounttypes AS at ON at.id = a.accounttype WHERE MONTH(?) AND YEAR(?) ORDER BY transdate DESC, id ASC";
             $statement = $this->conn->prepare($sql);
             $statement->bindParam(1, $current);
             $statement->bindParam(2, $current);
@@ -59,7 +59,7 @@ class MainLedgerRepository {
     }
     function getLedgerEntryById($id) {
         if (isset($id)) {
-            $sql = "SELECT l.*, t.transdate, a.name AS accountname, at.name AS accounttype  FROM ledgerentries AS l JOIN transactions AS t ON l.trans = t.id JOIN accounts AS a ON a.id = l.account JOIN accounttypes AS at ON at.id = a.accounttype WHERE l.id = ?  ORDER BY transdate, id";
+            $sql = "SELECT l.*, t.transdate, a.name AS accountname, at.name AS accounttype  FROM ledgerentries AS l JOIN transactions AS t ON l.trans = t.id JOIN accounts AS a ON a.id = l.account JOIN accounttypes AS at ON at.id = a.accounttype WHERE l.id = ? ORDER BY transdate DESC, id ASC";
             $statement = $this->conn->prepare($sql);
             $statement->bindParam(1, $id);
             $statement->execute();
@@ -75,11 +75,15 @@ class MainLedgerRepository {
         $account =$cust_dict["account"];
         $amount = $cust_dict["amount"];
         $transdate = $cust_dict["transdate"];
-        $sql = "INSERT INTO ledgerentries (trans, account, amount) VALUES (?, ?, ?)";
+        $entrytype = $cust_dict["entrytype"];
+        $name = $cust_dict["name"];
+        $sql = "INSERT INTO ledgerentries (trans, account, amount, entrytype, `name`) VALUES (?, ?, ?, ?, ?)";
         $statement = $this->conn->prepare($sql);
         $statement->bindParam(1, $transdate);
         $statement->bindParam(2, $account);
         $statement->bindParam(3, $amount);
+        $statement->bindParam(4, $entrytype);
+        $statement->bindParam(5, $name);
         $statement->execute();
     }
 

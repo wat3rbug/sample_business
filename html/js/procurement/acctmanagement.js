@@ -216,3 +216,7 @@ function addAccount() {
         }
     });
 }
+
+function addNewAccount() {
+    $('#addAccountModal').modal('toggle');
+}
