@@ -8,11 +8,20 @@ drop table if exists `customers`;
 drop table if exists `states`;
 drop table if exists `orders`;
 
+create table materials (
+    id int auto_increment primary key,
+    name varchar(40) not null
+) engine = InnoDB;
+
 create table products (
     id int auto_increment primary key,
     name varchar(40) not null,
     photo varchar(255),
-    url varchar(255)
+    url varchar(255),
+    buildtime decimal (5,2) not null,
+    material decimal (5,2) not null,
+    materialtype int not null,
+    foreign key fk_material_type(materialtype)references materials(id)
 ) engine = InnoDB;
 
 create table colors(

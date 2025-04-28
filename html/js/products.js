@@ -1,6 +1,7 @@
 $(document).ready(function() {
 
     buildProductsTable();
+    getMaterialsDropDowns();
 
     $('.addProdBtn').on('click', function(){
         $('#addProdModal').modal('toggle');
@@ -41,13 +42,19 @@ function addProduct() {
     var name = $('#addProdName').val();
     var url = $('#addProdUrl').val();
     photo = $('#addProdPhoto').val();
+    var time = $('#addProdTime').val();
+    var mat = $('#addProMat').val();
+    var mattype = $('#addProdMatType').val();
     $.ajax({
         url: "/repos/addProduct.php",
         type: "post",
         data: {
             "name": name,
             "photo": photo,
-            "url": url
+            "url": url,
+            "material": mat,
+            "materialtype": mattype,
+            "time": time
         },
         success: function(results) {
             $('#addProdModal').modal('hide');
@@ -61,10 +68,16 @@ function clearProdModals() {
     $('#addProdName').val('');
     $('#addProdUrl').val('');
     $('#addProdPhoto').val('');
+    $('#addProdTime').val('');
+    $('#addProdMat').val('');
+    $('#addProMatType').val('');
     $('#editProdId').val('');
     $('#editProdName').val('');
     $('#editProdUrl').val('');
     $('#editProdPhoto').val('');
+    $('#editProdTime').val('');
+    $('#editProdMat').val('');
+    $('#editProMatType').val('');
 }
 
 function buildProductsTable() {
@@ -74,7 +87,7 @@ function buildProductsTable() {
         success: function(results) {
             $('.products').find('tbody tr').remove();
             if (results == null || results.length == 0) {
-                var empty = '<tr><td colspan="4" class="text-center">No Data</td></tr>';
+                var empty = '<tr><td colspan="7" class="text-center">No Data</td></tr>';
                 $('.products tbody').append(empty);
             } else {
                 for (i = 0; i < results.length; i++) {
@@ -82,6 +95,9 @@ function buildProductsTable() {
                     var line = '<tr><td style="width:65px">' + makeActionBtns(product) + '</td>';
                     line += '<td>' + product.name + '</td>';
                     line += '<td>' + makeUrlSection(product.url) + '</td>';
+                    line += '<td>' + makeTime(product.time) + '</td>';
+                    line += '<td>' + makeAmount(product.material) + '</td>';
+                    line += '<td>' + product.materialtype + '</td>';
                     line += '<td>' + makePhotoSection(product.photo) + '</td>';
                     $('.products tbody').append(line);
                 }
@@ -155,6 +171,26 @@ function deleteProduct(id) {
         },
         success: function(results) {
             buildProductsTable();
+        }
+    });
+}
+
+function getMaterialsDropDowns() {
+    $.ajax({
+        url: "/repos/getMaterials.php",
+        dataType: "json",
+        success: function(results) {
+            $('#addProdMatType').empty();
+            $('#editProdMatType').empty();
+            if (results != null && results.length > 0) {
+                for (i = 0; i < results.length; i++) {
+                    var mat = results[i];
+                    var option = '<option value="' + mat.id;
+                    option += '">' + mat.name + '</option>';
+                    $('#addProdMatType').append(option);
+                    $('#editProdMatType').append(option);
+                }
+            } 
         }
     });
 }

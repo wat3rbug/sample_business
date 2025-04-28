@@ -28,13 +28,20 @@ class ProductRepository {
         $name = $cust_dict["name"];
         $url = $cust_dict["url"];
         $photo = $cust_dict["photo"];
+        $material =  $cust_dict["material"];
+        $time = $cust_dict["time"];
+        $mattype = $cust_dict["materialtype"];
+
         if ($photo == "") $photo = null;
-        if (isset($name) && isset($url)) {
-            $sql = "INSERT INTO products (`name`, photo, `url`) VALUES (?, ?, ?)";
+        if (isset($name) && isset($url) && isset($material) && isset($time) && isset($mattype)) {
+            $sql = "INSERT INTO products (`name`, photo, `url`, buildtime, material, materialtype) VALUES (?, ?, ?, ?, ?, ?)";
             $statement = $this->conn->prepare($sql);
             $statement->bindParam(1, $name);
             $statement->bindParam(2, $photo);
             $statement->bindParam(3, $url);
+            $statement->bindParam(4, $time);
+            $statement->bindParam(5, $material);
+            $statement->bindParam(6, $materialtype);
             $statement->execute();
         }
     }

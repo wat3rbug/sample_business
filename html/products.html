@@ -102,8 +102,7 @@
 			<div class="modal-body">
 				
 				<div class="row">
-					<div class="col-sm-2">&nbsp;</div>
-                    <div class="col-lg-2 text-right">
+                    <div class="col-lg-4 text-right">
                         <label>Name</label>
                     </div>
 					<div class="col-sm-6 text-left">
@@ -112,22 +111,55 @@
 				</div>
 				<div class="row">&nbsp;</div>
 				<div class="row">
-					<div class="col-sm-2 text-right">&nbsp;</div>
-                    <div class="col-lg-2 text-right"><label>URL</label></div>
+                    <div class="col-lg-4 text-right"><label>URL</label></div>
 					<div class="col-sm-6 text-left">
 						<input type="text" class="form-control" id="addProdUrl" />
 					</div>
 				</div>
 				<div class="row">&nbsp;</div>
 				<div class="row">
-					<div class="col-sm-2">&nbsp;</div>
+                    <div class="col-lg-4 text-right"><label>Time</label></div>
+					<div class="col-sm-5 text-left">
+						<div class="input-group mb-3">
+							<div class="input-group-text" id="timeAddon">
+								<span class="glyphicon glyphicon-time"></span>
+							</div>
+							<input type="number" class="form-control" id="addProdTime" aria-describedby="timeAddon">
+							<div class="input-group-prepend">
+								<span class="input-group-text">hr.mm</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">&nbsp;</div>
+				<div class="row">
+                    <div class="col-lg-4 text-right"><label>Material Amount</label></div>
+					<div class="col-sm-4 text-left">
+						<div class="input-group mb-3">
+							<input type="text" class="form-control" id="addProdMat">
+							<div class="input-group-append">
+								<span class="input-group-text">g</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">&nbsp;</div>
+				<div class="row">
+                    <div class="col-lg-4 text-right"><label>Material Type</label></div>
+					<div class="col-sm-4 text-left">
+						<select class="form-control" id="addProdMatType"></select>
+					</div>
+				</div>
+
+				<div class="row">&nbsp;</div>
+				<div class="row">
 					<div class="col-sm-4 text-right">Photo</div>
 					<div class="col-sm-4">
-						<div class="input-group">
-							<div class='input-group-addon'>
+						<div class="input-group mb-3">
+							<div class='input-group-addon' id="picAddon">
 								<span class="glyphicon glyphicon-picture"></span>
 							</div>
-							<input type="text" class="form-control" id="addProdPhoto"/>
+							<input type="text" class="form-control" id="addProdPhoto" aria-describedby="picAddon">
 						</div>
 					</div>
 				</div>
@@ -217,6 +249,9 @@
                     		<th class="info">Action</th>
                     		<th class="info">Name</th>
                     		<th class="info">URL</th>
+							<th class="info">Time</th>
+							<th class="info">Material Amount</th>
+							<th class="info">Material Type</th>
                     		<th class="info">Photo</th>
                 		</tr>
             		</thead>
