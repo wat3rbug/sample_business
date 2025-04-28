@@ -29,7 +29,7 @@ class ProductRepository {
         $url = $cust_dict["url"];
         $photo = $cust_dict["photo"];
         $material =  $cust_dict["material"];
-        $time = $cust_dict["time"];
+        $time = $cust_dict["buildtime"];
         $mattype = $cust_dict["materialtype"];
 
         if ($photo == "") $photo = null;
@@ -41,7 +41,7 @@ class ProductRepository {
             $statement->bindParam(3, $url);
             $statement->bindParam(4, $time);
             $statement->bindParam(5, $material);
-            $statement->bindParam(6, $materialtype);
+            $statement->bindParam(6, $mattype);
             $statement->execute();
         }
     }
@@ -60,7 +60,7 @@ class ProductRepository {
         }
     }
     function getAllProducts() {
-        $sql = "SELECT * FROM products";
+        $sql = "SELECT p.id, p.name, p.url, p.buildtime, p.material, m.name AS materialtype, p.photo FROM products AS p JOIN materials AS m on p.materialtype = m.id";
         $statement = $this->conn->prepare($sql);
         $statement->execute();
         $output = array();
@@ -75,21 +75,28 @@ class ProductRepository {
         $name = $cust_dict["name"];
         $url = $cust_dict["url"];
         $photo = $cust_dict["photo"];
+        $buildtime = $cust_dict["buildtime"];
+        $material = $cust_dict["material"];
+        $mattype = $cust_dict["materialtype"];
+        var_dump($cust_dict);
         if ($photo == "") $photo = null;
         if (isset($name) && isset($url) && isset($id)) {
-            $sql = "UPDATE products SET `name` = ?, photo = ?, `url` = ? WHERE id = ?";
+            $sql = "UPDATE products SET `name` = ?, photo = ?, `url` = ?, buildtime = ?, material = ?, materialtype = ? WHERE id = ?";
             $statement = $this->conn->prepare($sql);
             $statement->bindParam(1, $name);
             $statement->bindParam(2, $photo);
             $statement->bindParam(3, $url);
-            $statement->bindParam(4, $id);
+            $statement->bindParam(4, $buildtime);
+            $statement->bindParam(5, $material);
+            $statement->bindParam(6, $mattype);
+            $statement->bindParam(7, $id);
             $statement->execute();
         }
     }
 
     function deleteProduct($id) {
         if (isset($id)) {
-            $sql = "DELETE FROM products WHERE id= ?";
+            $sql = "DELETE FROM products WHERE id = ?";
             $statement = $this->conn->prepare($sql);
             $statement->bindParam(1, $id);
             $statement->execute();

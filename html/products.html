@@ -38,38 +38,69 @@
 			<div class="modal-body">
 				
 				<div class="row">
-					<div class="col-sm-2">&nbsp;</div>
-                    <div class="col-lg-2 text-right">
+                    <div class="col-lg-4 text-right">
                         <label>Name</label>
                     </div>
 					<div class="col-sm-6 text-left">
-                        <input type="hidden" id="editProdId" />
+						<input type="hidden" id="editProdId">
 						<input type="text" class="form-control" id="editProdName">
 					</div>
 				</div>
 				<div class="row">&nbsp;</div>
 				<div class="row">
-					<div class="col-sm-2 text-right">&nbsp;</div>
-                    <div class="col-lg-2 text-right"><label>URL</label></div>
+                    <div class="col-lg-4 text-right"><label>URL</label></div>
 					<div class="col-sm-6 text-left">
 						<input type="text" class="form-control" id="editProdUrl" />
 					</div>
 				</div>
 				<div class="row">&nbsp;</div>
 				<div class="row">
-					<div class="col-sm-2">&nbsp;</div>
-					<div class="col-sm-4 text-right">Photo</div>
-					<div class="col-sm-4">
-						<div class="input-group">
-							<div class='input-group-addon'>
-								<span class="glyphicon glyphicon-picture"></span>
+                    <div class="col-lg-4 text-right"><label>Time</label></div>
+					<div class="col-sm-5 text-left">
+						<div class="input-group mb-3">
+							<div class="input-group-text" id="edittimeAddon">
+								<span class="glyphicon glyphicon-time"></span>
 							</div>
-							<input type="text" class="form-control" id="editProdPhoto">
+							<input type="number" class="form-control" id="editProdTime" aria-describedby="edittimeAddon">
+							<div class="input-group-prepend">
+								<span class="input-group-text">hr.mm</span>
+							</div>
 						</div>
 					</div>
 				</div>
 				<div class="row">&nbsp;</div>
-			</div>
+				<div class="row">
+                    <div class="col-lg-4 text-right"><label>Material Amount</label></div>
+					<div class="col-sm-4 text-left">
+						<div class="input-group mb-3">
+							<input type="text" class="form-control" id="editProdMat">
+							<div class="input-group-append">
+								<span class="input-group-text">g</span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">&nbsp;</div>
+				<div class="row">
+                    <div class="col-lg-4 text-right"><label>Material Type</label></div>
+					<div class="col-sm-4 text-left">
+						<select class="form-control" id="editProdMatType"></select>
+					</div>
+				</div>
+
+				<div class="row">&nbsp;</div>
+				<div class="row">
+					<div class="col-sm-4 text-right">Photo</div>
+					<div class="col-sm-4">
+						<div class="input-group mb-3">
+							<div class='input-group-addon' id="editpicAddon">
+								<span class="glyphicon glyphicon-picture"></span>
+							</div>
+							<input type="text" class="form-control" id="editProdPhoto" aria-describedby="editpicAddon">
+						</div>
+					</div>
+				</div>
+            </div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-warning" onclick="updateProduct()">
 					<span class="glyphicon glyphicon-refresh"></span>&nbsp;Update Product

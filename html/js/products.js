@@ -21,6 +21,9 @@ function updateProduct() {
     var name = $('#editProdName').val();
     var url = $('#editProdUrl').val();
     var photo = $('#editProdPhoto').val();
+    var time = $('#editProdTime').val();
+    var mat = $('#editProdMat').val();
+    var mattype = $('#editProdMatType').val();
     $.ajax({
         url: "/repos/updateProduct.php",
         type: "post",
@@ -28,14 +31,17 @@ function updateProduct() {
             "id": id,
             "name": name,
             "photo": photo,
-            "url": url
+            "url": url,
+            "buildtime": time,
+            "material": mat,
+            "materialtype": mattype
         },
         success: function(results) {
             $('#editProdModal').modal('toggle');
             clearProdModals();
             buildProductsTable();
         }
-    })
+    });
 }
 
 function addProduct() {
@@ -43,7 +49,7 @@ function addProduct() {
     var url = $('#addProdUrl').val();
     photo = $('#addProdPhoto').val();
     var time = $('#addProdTime').val();
-    var mat = $('#addProMat').val();
+    var mat = $('#addProdMat').val();
     var mattype = $('#addProdMatType').val();
     $.ajax({
         url: "/repos/addProduct.php",
@@ -54,14 +60,14 @@ function addProduct() {
             "url": url,
             "material": mat,
             "materialtype": mattype,
-            "time": time
+            "buildtime": time
         },
         success: function(results) {
             $('#addProdModal').modal('hide');
             clearProdModals();
             buildProductsTable();
         }
-    })
+    });
 }
 
 function clearProdModals() {
@@ -95,9 +101,9 @@ function buildProductsTable() {
                     var line = '<tr><td style="width:65px">' + makeActionBtns(product) + '</td>';
                     line += '<td>' + product.name + '</td>';
                     line += '<td>' + makeUrlSection(product.url) + '</td>';
-                    line += '<td>' + makeTime(product.time) + '</td>';
-                    line += '<td>' + makeAmount(product.material) + '</td>';
-                    line += '<td>' + product.materialtype + '</td>';
+                    line += '<td>' + product.buildtime + ' mins</td>';
+                    line += '<td class="text-center">' + product.material + ' g</td>';
+                    line += '<td class="text-center">' + product.materialtype + '</td>';
                     line += '<td>' + makePhotoSection(product.photo) + '</td>';
                     $('.products tbody').append(line);
                 }
@@ -105,6 +111,7 @@ function buildProductsTable() {
         }
     });
 }
+
 function makeUrlSection(url) {
     if (url == null) {
         return 'N/A';
@@ -158,6 +165,9 @@ function editProduct(id) {
             $('#editProdName').val(product.name);
             $('#editProdUrl').val(product.url);
             $('#editProdPhoto').val(product.photo);
+            $('#editProdTime').val(product.buildtime);
+            $('#editProdMat').val(product.material);
+            $('#editProdMatType').val(product.materialtype);
         }
     });
 }
