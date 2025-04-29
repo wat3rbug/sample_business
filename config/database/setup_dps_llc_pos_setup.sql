@@ -24,6 +24,13 @@ create table products (
     foreign key fk_material_type(materialtype)references materials(id)
 ) engine = InnoDB;
 
+create table inventory (
+    id int auto_increment primary key,
+    product int not null,
+    foreign key fk_product_inv(product) references products(id),
+    amount int not null default(1)
+) engine = InnoDB;
+
 create table colors(
     id int auto_increment primary key,
     name varchar(40) not null
