@@ -112,5 +112,16 @@ class ProductRepository {
             $statement->execute();
         }
     }
+
+    function getLastProduct() {
+        $sql = "SELECT * FROM products ORDER BY id DESC LIMIT 1";
+        $statement = $this->conn->prepare($sql);
+        $statement->execute();
+        $output = array();
+        while($row = $statement->fetch()) {
+            $output[] = $row;
+        }
+        return $output;
+    }
 }
 ?>

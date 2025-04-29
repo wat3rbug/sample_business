@@ -2,19 +2,23 @@
 <head>
     <meta charsset="utf-8">
     <title>Design Print Send LLC</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/frozenheader.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/frozenheader.css">
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
-    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
+    <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico"/>
 
-    <script src="jquery-3.3.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="/jquery-3.3.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
-	
-    <script src="js/nav.js"></script>
+	<script src="/js/inventory.js"></script>
+    <script src="/js/nav.js"></script>
 </head>
 <body>
+
+
+<!-- normal page -->
+
 <div class="row">&nbsp;</div>
 <div class="row">
     <div class="col-sm-1">&nbsp;</div>
@@ -31,39 +35,65 @@
     <div class="col-lg-10" role="navigation">
         <ul class="nav nav-pills">
             <li class="nav-item">
-                <a class="nav-link active" href="http://dpsllc.com/index.html">Home</a>
+                <a class="nav-link" href="http://dpsllc.com/index.html">Home</a>
             </li>
             <li class="nav-item">
+
                 <a class="nav-link" href="http://dpsllc.com/finance/income.html">Finance</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="http://dpsllc.com/pos/neworder.html">Orders</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="http://dpsllc.com/products.html">Inventory</a>
+                <a class="nav-link active" href="http://dpsllc.com/inventory/products.html">Inventory</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="http://dpsllc.com/processing.html">Processing</a>
             </li>
-            <li class="nav-item">
+            <li class="naV-item">
                 <a class="nav-link" href="http://dpsllc.com/procurement/acctmanagement.html">Procurement</a>
             </li>
         </ul>
     </div>
+    <div class="col-lg-1">&nbsp;</div>
 </div>
 <div class="row">&nbsp;</div>
 <div class="row">
     <div class="col-lg-1">&nbsp;</div>
     <div class="col-lg-10">
-        The overall operations work flow is as follows:
-        <ul>
-            <li><a href="http://dpsllc.com/procurement/acctmanagement.html">Procurement</a> is where materials are ordered, so accounts are added here as well as vendors</li>
-            <li>The all the sales orders are entered in <a href="http://dpsllc.com/pos/neworder.html">Orders.</a></li>
-            <li><a href="http://dpsllc.com/products.html">Inventory</a> is where the materials listing is for checking to see if products can be made.</li>
-            <li><a href="http://dpsllc.com/processing.html">Processing</a> is where the orders are tracked from where they are initially added until they are sent out.</li>
-            <li><a href="http://dpsllc.com/finance/income.html">Finance</a> is where all the money is tracked</li>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link" href="http://dpsllc.com/products.html">Products</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" href="http://dpsllc.com/inventory.html">Inventory</a>
+            </li>
         </ul>
     </div>
+    <div class="col-lg-1">&nbsp;</div>
 </div>
+
+		<div class="row">&nbsp;</div>
+		<div class="row">
+            <div class="col-lg-1">&nbsp;</div>
+			<div class="col-md-10">
+		        <h4 class="text-center">Product Inventory</h4>
+        		<table class="table table-striped inventory">
+            		<thead>
+                		<tr>
+                    		<th class="info">Action</th>
+                    		<th class="info">Name</th>
+                    		<th class="info">Photo</th>
+							<th class="info">Amount</th>
+                		</tr>
+            		</thead>
+            		<tbody>
+            		</tbody>
+        		</table>
+			</div>
+		</div>
+    </div>
+</div>
+<div class="row">&nbsp;</div>
 </body>
 </html>
